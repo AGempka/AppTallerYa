@@ -39,7 +39,7 @@ public View onCreateView(LayoutInflater inflater,ViewGroup container,
         txtPassword=(EditText)vista.findViewById(R.id.txtPassword);
         txtNombre=(EditText)vista.findViewById(R.id.txtNombre);
         txtTelefono=(EditText)vista.findViewById(R.id.txtTelefono);
-        btnVolver=(ImageButton)vista.findViewById(R.id.btnVolver;
+        btnVolver=(ImageButton)vista.findViewById(R.id.btnVolver);
         btnRegistrar=(Button)vista.findViewById(R.id.btnRegistrar);
         rq=Volley.newRequestQueue(getContext());
 
