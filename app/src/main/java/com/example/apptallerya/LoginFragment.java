@@ -65,7 +65,7 @@ public class LoginFragment extends Fragment implements Response.Listener<JSONObj
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(getContext(), "No Se encontró el usuario " +error.toString()+ txtCorreo.getText().toString(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "No se encontró el usuario " +error.toString()+ txtCorreo.getText().toString(), Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -101,7 +101,6 @@ public void onResponse(JSONObject response){
         }
 
         void registrar_usuario(){
-        //192.168.1.66(172.29.243.3
         String url="https://tallerya.000webhostapp.com//registrar.php?&correo_cliente="+txtCorreo.getText().toString()+"&password_cliente="+txtPassword.getText().toString()
         +"&nombre_cliente="+txtNombre.getText().toString()+"&direccion_cliente="+txtDireccion.getText().toString()+"&telefono_cliente="+txtTelefono.getText().toString();
 
