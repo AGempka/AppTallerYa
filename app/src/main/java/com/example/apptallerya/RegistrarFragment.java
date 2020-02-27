@@ -37,6 +37,7 @@ public View onCreateView(LayoutInflater inflater,ViewGroup container,
 
         View vista=inflater.inflate(R.layout.fragment_registrar,container,false);
         txtPassword=(EditText)vista.findViewById(R.id.txtPassword);
+        txtCorreo=(EditText)vista.findViewById(R.id.txtCorreo);
         txtNombre=(EditText)vista.findViewById(R.id.txtNombre);
         txtTelefono=(EditText)vista.findViewById(R.id.txtTelefono);
         btnVolver=(ImageButton)vista.findViewById(R.id.btnVolver);
@@ -68,12 +69,12 @@ public void onClick(View view){
 
 @Override
 public void onErrorResponse(VolleyError error){
-        Toast.makeText(getContext(),"No Se puedo registrar el usuario "+error.toString()+txtCorreo.getText().toString(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),"No se puedo registrar el usuario "+error.toString()+txtNombre.getText().toString(),Toast.LENGTH_LONG).show();
         }
 
 @Override
 public void onResponse(JSONObject response){
-        Toast.makeText(getContext(),"Se registró correctamente el usuario "+txtCorreo.getText().toString(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),"Se registró correctamente el usuario "+txtNombre.getText().toString(),Toast.LENGTH_SHORT).show();
         limpiarCajas();
 
 
@@ -84,7 +85,7 @@ public void onResponse(JSONObject response){
         txtCorreo.setText("");
         txtPassword.setText("");
         txtNombre.setText("");
-        txtDireccion.setText("");
+   //     txtDireccion.setText("");
         txtTelefono.setText("");
 
         }
@@ -102,7 +103,7 @@ public void onResponse(JSONObject response){
 
         void registrar_usuario(){
         String url="https://tallerya.000webhostapp.com//registrar.php?&correo_cliente="+txtCorreo.getText().toString()+"&password_cliente="+txtPassword.getText().toString()
-        +"&nombre_cliente="+txtNombre.getText().toString()+"&direccion_cliente="+txtDireccion.getText().toString()+"&telefono_cliente="+txtTelefono.getText().toString();
+        +"&nombre_cliente="+txtNombre.getText().toString()+"&telefono_cliente="+txtTelefono.getText().toString();
 
         jrq=new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         rq.add(jrq);
