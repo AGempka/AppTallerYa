@@ -14,8 +14,8 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        txtBienvenido=(TextView)findViewById(R.id.txtbienvenido);
-        String cliente=getIntent().getStringExtra("nombre_cliente");
-        txtBienvenido.setText("¡Bienvenido "+ cliente + "!");
+       // txtBienvenido=(TextView)findViewById(R.id.txtbienvenido);
+        //String cliente=getIntent().getStringExtra("nombre_cliente");
+        //txtBienvenido.setText("¡Bienvenido "+ cliente + "!");
     }
 }
