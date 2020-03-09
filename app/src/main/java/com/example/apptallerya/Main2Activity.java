@@ -1,6 +1,7 @@
 package com.example.apptallerya;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,9 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
        // txtBienvenido=(TextView)findViewById(R.id.txtbienvenido);
         //String cliente=getIntent().getStringExtra("nombre_cliente");

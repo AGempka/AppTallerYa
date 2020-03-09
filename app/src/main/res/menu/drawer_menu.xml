@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_talleres"
+            android:icon="@drawable/ic_talleres"
+            android:title="Talleres" />
+        <item
+            android:id="@+id/nav_agenda"
+            android:icon="@drawable/ic_agenda"
+            android:title="Agendamiento" />
+        <item
+            android:id="@+id/nav_promo"
+            android:icon="@drawable/ic_promo"
+            android:title="Promociones" />
+    </group>
+
+    <item android:title="Usuario">
+        <item
+            android:id="@+id/nav_perfil"
+            android:icon="@drawable/ic_perfil"
+            android:title="Perfil" />
+        <item
+            android:id="@+id/nav_nosotros"
+            android:icon="@drawable/ic_nosotros"
+            android:title="Quienes somos" />
+        />
+    </item>
+
+</menu>
