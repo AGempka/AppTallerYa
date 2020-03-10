@@ -85,7 +85,6 @@ public class LoginFragment extends Fragment implements Response.Listener<JSONObj
         }
 
         Intent intencion = new Intent(getContext(), Main2Activity.class);
-        intencion.putExtra(Main2Activity.nombre_cliente, cliente.getNombre_cliente());
         startActivity(intencion);
 
 
