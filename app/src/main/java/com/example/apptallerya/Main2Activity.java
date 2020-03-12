@@ -2,36 +2,26 @@ package com.example.apptallerya;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.google.android.material.navigation.NavigationView;
-
-public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private DrawerLayout drawer;
+public class Main2Activity extends AppCompatActivity {
+    public static final String nombre_cliente="nombre_cliente";
+    TextView txtBienvenido;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        drawer = findViewById(R.id.drawer_layout);
-
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-
-
+       // txtBienvenido=(TextView)findViewById(R.id.txtbienvenido);
+        //String cliente=getIntent().getStringExtra("nombre_cliente");
+        //txtBienvenido.setText("¡Bienvenido "+ cliente + "!");
     }
+}
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
