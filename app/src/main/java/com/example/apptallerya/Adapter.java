@@ -12,16 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.TallerViewHolder>
 {
 
+    Context context;
 
-    private List<Taller> tallerList;
+   List<Taller> tallerList;
 
     public Adapter( List<Taller> tallerList) {
-
+        this.context = context;
         this.tallerList = tallerList;
     }
 
@@ -62,4 +64,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TallerViewHolder>
         img1=itemView.findViewById(R.id.img1);
         }
     }
+
+//public void filtrar(ArrayList<Taller> filtrar){
+  //      this.tallerList = filtrar;
+    //    notifyDataSetChanged();
+
+//}
 }

@@ -1,9 +1,14 @@
 package com.example.apptallerya;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
 public class Taller {
    private Integer idcliente;
    private String nombre_taller, direccion_taller, telefono_taller, password_taller;
    private String imagen1_taller, imagen2_taller, imagen3_taller;
+   private Bitmap img1;
    private double evaluacion_taller;
 
     public Taller(Integer idcliente, String nombre_taller, String direccion_taller, String telefono_taller, String password_taller, String imagen1_taller, String imagen2_taller, String imagen3_taller, double evaluacion_taller) {
@@ -63,8 +68,25 @@ public class Taller {
     }
 
     public void setImagen1_taller(String imagen1_taller) {
-        this.imagen1_taller = imagen1_taller;
-    }
+
+            this.imagen1_taller = imagen1_taller;
+
+            try {
+                byte[] byteCode= Base64.decode(imagen1_taller,Base64.DEFAULT);
+                this.img1= BitmapFactory.decodeByteArray(byteCode,0,byteCode.length);
+
+               // int alto=100;//alto en pixeles
+                //int ancho=150;//ancho en pixeles
+
+                //Bitmap foto= BitmapFactory.decodeByteArray(byteCode,0,byteCode.length);
+                //this.img1=Bitmap.createScaledBitmap(foto,alto,ancho,true);
+
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
 
     public String getImagen2_taller() {
         return imagen2_taller;

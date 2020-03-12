@@ -11,9 +11,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -31,25 +34,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class PerfilesTalleresFragment extends Fragment
-    implements Response.Listener<JSONObject>,Response.ErrorListener{
+        implements Response.Listener<JSONObject>, Response.ErrorListener {
 
-        private static final String ARG_PARAM1 = "param1";
-        private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
-        private String mParam1;
-        private String mParam2;
+    private String mParam1;
+    private String mParam2;
 
-        private OnFragmentInteractionListener mListener;
+    private OnFragmentInteractionListener mListener;
 
     List<Taller> tallerList;
     RecyclerView recyclerView;
+    //EditText etBuscador;
 
     ProgressDialog dialog;
 
     RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
+
+    Adapter adaptador;
 
     public PerfilesTalleresFragment() {
     }
@@ -67,6 +72,7 @@ public class PerfilesTalleresFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -76,14 +82,15 @@ public class PerfilesTalleresFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View vista= inflater.inflate(R.layout.fragment_perfiles_talleres, container, false);
+        View vista = inflater.inflate(R.layout.fragment_perfiles_talleres, container, false);
 
-        recyclerView=(RecyclerView)vista.findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) vista.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        tallerList=new ArrayList<>();
+        tallerList = new ArrayList<>();
+        //etBuscador = (EditText) vista.findViewById(R.id.etBuscador);
+        request = Volley.newRequestQueue(getContext());
 
-         request= Volley.newRequestQueue(getContext());
 
         cargarWebService();
         return vista;
@@ -92,17 +99,15 @@ public class PerfilesTalleresFragment extends Fragment
 
 
 
-
-
     private void cargarWebService() {
-        dialog= new ProgressDialog(getContext());
+        dialog = new ProgressDialog(getContext());
         dialog.setMessage("Consultando imágenes");
         dialog.show();
 
-        String url="https://tallerya.000webhostapp.com//talleresperfiles.php";
-        jsonObjectRequest=new JsonObjectRequest(Request.Method.GET,url,null,this,this);
-        request.add(jsonObjectRequest);
-        //VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
+        String url = "https://tallerya.000webhostapp.com//talleresperfiles.php";
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        //request.add(jsonObjectRequest);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
 
     }
 
@@ -114,16 +119,16 @@ public class PerfilesTalleresFragment extends Fragment
 
     @Override
     public void onResponse(JSONObject response) {
-        Taller taller=null;
+        Taller taller = null;
 
-        JSONArray json=response.optJSONArray("taller");
+        JSONArray json = response.optJSONArray("taller");
 
         try {
 
-            for (int i=0;i<json.length();i++){
-                taller=new Taller();
-                JSONObject jsonObject=null;
-                jsonObject=json.getJSONObject(i);
+            for (int i = 0; i < json.length(); i++) {
+                taller = new Taller();
+                JSONObject jsonObject = null;
+                jsonObject = json.getJSONObject(i);
 
                 taller.setNombre_taller(jsonObject.optString("nombre_taller"));
                 taller.setDireccion_taller(jsonObject.optString("direccion_taller"));
@@ -132,13 +137,13 @@ public class PerfilesTalleresFragment extends Fragment
                 tallerList.add(taller);
             }
             dialog.hide();
-            Adapter adapter=new Adapter(tallerList);
+            Adapter adapter = new Adapter(tallerList);
             recyclerView.setAdapter(adapter);
 
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" +
-                    " "+response, Toast.LENGTH_LONG).show();
+                    " " + response, Toast.LENGTH_LONG).show();
             dialog.hide();
         }
     }
@@ -168,11 +173,10 @@ public class PerfilesTalleresFragment extends Fragment
     }
 
 
-
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
 
 
-    }
+}
 
