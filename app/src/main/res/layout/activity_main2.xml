@@ -9,12 +9,15 @@
     tools:context=".Main2Activity"
     tools:openDrawer="start">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
+
             android:id="@+id/toolbar"
             android:layout_width="?actionBarSize"
             android:layout_height="match_parent"

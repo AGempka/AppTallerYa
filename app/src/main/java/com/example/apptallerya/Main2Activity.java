@@ -2,21 +2,28 @@ package com.example.apptallerya;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.ContentQueryMap;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PerfilesTalleresFragment.OnFragmentInteractionListener {
     private DrawerLayout drawer;
+    Adapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +40,9 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().replace(R.id.drawer_layout, new PerfilesTalleresFragment()).commit();
+
+
+
 
     }
 
@@ -68,4 +78,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+
+
 }

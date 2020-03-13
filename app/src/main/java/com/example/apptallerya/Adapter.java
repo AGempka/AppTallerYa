@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,10 +23,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TallerViewHolder>
     Context context;
 
    List<Taller> tallerList;
+   List<Taller> tallerListFull;
 
     public Adapter( List<Taller> tallerList) {
         this.context = context;
         this.tallerList = tallerList;
+        tallerListFull = new ArrayList<>(tallerList);
     }
 
 
@@ -44,6 +48,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TallerViewHolder>
         holder.txtNombreTaller.setText(taller.getNombre_taller());
         holder.txtDireccionTaller.setText(taller.getDireccion_taller());
         holder.textViewRating.setText(String.valueOf(taller.getEvaluacion_taller()));
+
+        if (tallerList.get(position).getImg1()!=null){
+            holder.img1.setImageBitmap(tallerList.get(position).getImg1());
+        }else{
+            holder.img1.setImageResource(R.drawable.img_base);
+        }
+
+
     }
 
 
@@ -52,7 +64,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TallerViewHolder>
         return tallerList.size();
     }
 
-     class TallerViewHolder extends RecyclerView.ViewHolder {
+
+    class TallerViewHolder extends RecyclerView.ViewHolder {
         TextView txtNombreTaller, txtDireccionTaller, textViewRating;
         ImageView img1;
 

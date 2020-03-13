@@ -11,7 +11,7 @@ public class Taller {
    private Bitmap img1;
    private double evaluacion_taller;
 
-    public Taller(Integer idcliente, String nombre_taller, String direccion_taller, String telefono_taller, String password_taller, String imagen1_taller, String imagen2_taller, String imagen3_taller, double evaluacion_taller) {
+    public Taller(Integer idcliente, String nombre_taller, String direccion_taller, String telefono_taller, String password_taller, String imagen1_taller, String imagen2_taller, String imagen3_taller, Bitmap img1, double evaluacion_taller) {
         this.idcliente = idcliente;
         this.nombre_taller = nombre_taller;
         this.direccion_taller = direccion_taller;
@@ -20,6 +20,7 @@ public class Taller {
         this.imagen1_taller = imagen1_taller;
         this.imagen2_taller = imagen2_taller;
         this.imagen3_taller = imagen3_taller;
+        this.img1 = img1;
         this.evaluacion_taller = evaluacion_taller;
     }
 
@@ -73,13 +74,13 @@ public class Taller {
 
             try {
                 byte[] byteCode= Base64.decode(imagen1_taller,Base64.DEFAULT);
-                this.img1= BitmapFactory.decodeByteArray(byteCode,0,byteCode.length);
+               // this.img1= BitmapFactory.decodeByteArray(byteCode,0,byteCode.length);
 
-               // int alto=100;//alto en pixeles
-                //int ancho=150;//ancho en pixeles
+               int alto=150;//alto en pixeles
+                int ancho=200;//ancho en pixeles
 
-                //Bitmap foto= BitmapFactory.decodeByteArray(byteCode,0,byteCode.length);
-                //this.img1=Bitmap.createScaledBitmap(foto,alto,ancho,true);
+                Bitmap foto= BitmapFactory.decodeByteArray(byteCode,0,byteCode.length);
+                this.img1=Bitmap.createScaledBitmap(foto,ancho,alto,true);
 
 
             }catch (Exception e){
@@ -134,6 +135,13 @@ public class Taller {
         this.evaluacion_taller = evaluacion_taller;
     }
 
+    public Bitmap getImg1() {
+        return img1;
+    }
+
+    public void setImg1(Bitmap img1) {
+        this.img1 = img1;
+    }
 
     public Taller() {
     }
