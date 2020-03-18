@@ -24,6 +24,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TallerViewHolder>
 
    List<Taller> tallerList;
    List<Taller> tallerListFull;
+   private OnItemClickListener miListener;
 
     public Adapter( List<Taller> tallerList) {
         this.context = context;
@@ -42,12 +43,23 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TallerViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TallerViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final TallerViewHolder holder, int position) {
         Taller taller = tallerList.get(position);
 
         holder.txtNombreTaller.setText(taller.getNombre_taller());
         holder.txtDireccionTaller.setText(taller.getDireccion_taller());
         holder.textViewRating.setText(String.valueOf(taller.getEvaluacion_taller()));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(miListener!=null){
+                    int position = holder.getAdapterPosition();
+                    if(position!=RecyclerView.NO_POSITION){
+                        miListener.onItemClick(position); //método onclick del interface
+                    }
+                }
+            }
+        });
 
         if (tallerList.get(position).getImg1()!=null){
             holder.img1.setImageBitmap(tallerList.get(position).getImg1());
@@ -76,6 +88,16 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TallerViewHolder>
         textViewRating=itemView.findViewById(R.id.textViewRating);
         img1=itemView.findViewById(R.id.img1);
         }
+
+
+    }
+
+public interface OnItemClickListener{
+void onItemClick(int position);
+}
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        miListener = listener;
     }
 
 //public void filtrar(ArrayList<Taller> filtrar){

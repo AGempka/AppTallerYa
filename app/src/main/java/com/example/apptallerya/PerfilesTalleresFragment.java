@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,8 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PerfilesTalleresFragment extends Fragment
-        implements Response.Listener<JSONObject>, Response.ErrorListener {
+public class PerfilesTalleresFragment extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener, Adapter.OnItemClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -80,6 +80,7 @@ public class PerfilesTalleresFragment extends Fragment
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -94,9 +95,11 @@ public class PerfilesTalleresFragment extends Fragment
         tallerList = new ArrayList<>();
         //etBuscador = (EditText) vista.findViewById(R.id.etBuscador);
         request = Volley.newRequestQueue(getContext());
-
-
         cargarWebService();
+
+        //probando para abrir otro fragment no sé que hago ayuda
+        recyclerView.setAdapter(adaptador);
+        adaptador.setOnItemClickListener(this);
         return vista;
 
     }
@@ -174,6 +177,20 @@ public class PerfilesTalleresFragment extends Fragment
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+
+    //probando abrir otro fragment con el click
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(getContext(), "Taller seleccionado "+position, Toast.LENGTH_SHORT).show();
+
+        //ver que puedo llamar en vez de tallerlist para obtener la posición del roll
+        Taller clickeditem = tallerList.get(position);
+        TalleresFragment f= TalleresFragment.newInstance(clickeditem.getNombre_taller(), clickeditem.getTelefono_taller());
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.drawer_layout,f).addToBackStack(null).commit();
+
     }
 
 
