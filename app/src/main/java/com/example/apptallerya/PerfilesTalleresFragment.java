@@ -98,8 +98,8 @@ public class PerfilesTalleresFragment extends Fragment implements Response.Liste
         cargarWebService();
 
         //probando para abrir otro fragment no sé que hago ayuda
-        recyclerView.setAdapter(adaptador);
-        adaptador.setOnItemClickListener(this);
+
+
         return vista;
 
     }
@@ -146,6 +146,7 @@ public class PerfilesTalleresFragment extends Fragment implements Response.Liste
             dialog.hide();
             Adapter adapter = new Adapter(tallerList);
             recyclerView.setAdapter(adapter);
+            adapter.setOnItemClickListener(this);
 
         } catch (JSONException e) {
             e.printStackTrace();

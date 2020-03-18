@@ -7,14 +7,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TalleresFragment#newInstance} factory method to
  * create an instance of this fragment.
- */
-public class TalleresFragment extends Fragment {
+ */public class TalleresFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -23,7 +23,10 @@ public class TalleresFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    TextView txtNombre;
+    TextView txtTelefono;
+    String nomTaller;
+    String telTaller;
 
     public TalleresFragment() {
         // Required empty public constructor
@@ -44,8 +47,8 @@ public class TalleresFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            nomTaller = getArguments().getString(ARG_PARAM1);
+            telTaller = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -53,11 +56,14 @@ public class TalleresFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_talleres, container, false);
-        //finviewbyid blablabla
-        //
-        // title.setText(tit);
+        txtNombre=(TextView) v.findViewById(R.id.txtNombreTa);
+        txtTelefono=(TextView) v.findViewById(R.id.txtTelefonoTa);
+        txtNombre.setText(nomTaller);
+        txtTelefono.setText(telTaller);
+
+
         //imAgen.setImageResource(ima);
-return v;
+        return v;
     }
 
 }
