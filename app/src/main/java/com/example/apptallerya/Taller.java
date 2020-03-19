@@ -8,7 +8,7 @@ public class Taller {
    private Integer idcliente;
    private String nombre_taller, direccion_taller, telefono_taller, password_taller;
    private String imagen1_taller, imagen2_taller, imagen3_taller;
-   private Bitmap img1;
+   private Bitmap img1, img2;
    private double evaluacion_taller;
 
     public Taller(Integer idcliente, String nombre_taller, String direccion_taller, String telefono_taller, String password_taller, String imagen1_taller, String imagen2_taller, String imagen3_taller, Bitmap img1, double evaluacion_taller) {

@@ -9,7 +9,7 @@
     tools:context=".Main2Activity"
     tools:openDrawer="start">
 
-
+<!-- SACAR EL TOOLBAR PARA PODER HACER FUNCIONAR EL FILTRO Y EL CARDVIEW-->
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -108,7 +108,7 @@ public class PerfilesTalleresFragment extends Fragment implements Response.Liste
 
     private void cargarWebService() {
         dialog = new ProgressDialog(getContext());
-        dialog.setMessage("Consultando imágenes");
+        dialog.setMessage("Buscando talleres");
         dialog.show();
 
         String url = "https://tallerya.000webhostapp.com//talleresperfiles.php";
@@ -139,8 +139,12 @@ public class PerfilesTalleresFragment extends Fragment implements Response.Liste
 
                 taller.setNombre_taller(jsonObject.optString("nombre_taller"));
                 taller.setDireccion_taller(jsonObject.optString("direccion_taller"));
+                taller.setTelefono_taller(jsonObject.optString("telefono_taller"));
                 taller.setEvaluacion_taller(Double.parseDouble(jsonObject.optString("evaluacion_taller")));
                 taller.setImagen1_taller(jsonObject.optString("imagen1_taller"));
+                taller.setImagen2_taller(jsonObject.optString("imagen2_taller"));
+
+                
                 tallerList.add(taller);
             }
             dialog.hide();
@@ -188,7 +192,7 @@ public class PerfilesTalleresFragment extends Fragment implements Response.Liste
 
         //ver que puedo llamar en vez de tallerlist para obtener la posición del roll
         Taller clickeditem = tallerList.get(position);
-        TalleresFragment f= TalleresFragment.newInstance(clickeditem.getNombre_taller(), clickeditem.getTelefono_taller());
+        TalleresFragment f= TalleresFragment.newInstance(clickeditem.getNombre_taller(), clickeditem.getTelefono_taller(), clickeditem.getDireccion_taller(), clickeditem.getEvaluacion_taller(), clickeditem.getImagen1_taller(), clickeditem.getImagen2_taller());
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.drawer_layout,f).addToBackStack(null).commit();
 

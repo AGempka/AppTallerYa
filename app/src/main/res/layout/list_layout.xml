@@ -22,21 +22,23 @@
                 android:id="@+id/txtNombreTaller"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="17dp"
                 android:layout_toRightOf="@id/img1"
                 android:text="Tallercito"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:textColor="@color/cardview_light_background"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/txtDireccionTaller"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtNombreTaller"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/img1"
+                android:layout_below="@+id/txtNombreTaller"
+                android:layout_marginStart="19dp"
+                android:layout_marginLeft="19dp"
+                android:layout_marginTop="8dp"
+                android:layout_toEndOf="@+id/img1"
+                android:layout_toRightOf="@+id/img1"
                 android:text="Ciudad del Este"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
@@ -44,15 +46,18 @@
                 android:id="@+id/textViewRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtDireccionTaller"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/img1"
-                android:background="@color/colorPrimary"
+                android:layout_below="@+id/txtDireccionTaller"
+                android:layout_marginStart="21dp"
+                android:layout_marginLeft="21dp"
+                android:layout_marginTop="14dp"
+                android:layout_toEndOf="@+id/img1"
+                android:layout_toRightOf="@+id/img1"
+                android:background="@color/design_default_color_secondary_variant"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:text="4.7"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>
