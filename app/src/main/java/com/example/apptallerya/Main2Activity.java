@@ -40,7 +40,7 @@ public class Main2Activity extends AppCompatActivity {
             //break;
             case R.id.nav_perfil:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new RegistrarFragment()).commit();
+                        new SignUpActivity()).commit();
                 break;
             //case R.id.nav_nosotros:
             // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

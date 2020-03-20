@@ -2,7 +2,6 @@ package com.example.apptallerya;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,23 +23,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-public class LoginFragment extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
+public class LoginFragment extends Fragment implements  Response.Listener<JSONObject>, Response.ErrorListener {
     RequestQueue rq;
     JsonRequest jrq;
     EditText txtCorreo, txtPassword;
-    Button btnSesion, btnRegistrar;
+    Button btnSesion, btnCrear;
 
-    @Override
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View vista = inflater.inflate(R.layout.fragment_login, container, false);
+        super.onCreate(savedInstanceState);
+        View vista = inflater.inflate(R.layout.login_fragment, container, false);
         txtCorreo = (EditText) vista.findViewById(R.id.txtCorreo);
         txtPassword = (EditText) vista.findViewById(R.id.txtPassword);
 
-        btnSesion = (Button) vista.findViewById(R.id.btnLogin);
-        btnRegistrar = (Button) vista.findViewById(R.id.btnRegistrar);
+        btnSesion = (Button) vista.findViewById(R.id.btnSesion);
+        btnCrear = (Button) vista.findViewById(R.id.btnCrear);
         rq = Volley.newRequestQueue(getContext());
 
         btnSesion.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +49,7 @@ public class LoginFragment extends Fragment implements Response.Listener<JSONObj
         });
 
 
-        btnRegistrar.setOnClickListener(new View.OnClickListener() {
+        btnCrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 registrar_usuario();
@@ -59,10 +57,8 @@ public class LoginFragment extends Fragment implements Response.Listener<JSONObj
         });
 
 
-        // Inflate the layout for this fragment
         return vista;
     }
-
     @Override
     public void onErrorResponse(VolleyError error) {
         Toast.makeText(getContext(), "No se encontró el usuario " +error.toString()+ txtCorreo.getText().toString(), Toast.LENGTH_LONG).show();
@@ -103,7 +99,7 @@ public class LoginFragment extends Fragment implements Response.Listener<JSONObj
     }
 
     void registrar_usuario(){
-        RegistrarFragment fr=new RegistrarFragment();
+        SignUpActivity fr=new SignUpActivity();
         //fr.setArguments(fr);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.escenario,fr)
@@ -111,7 +107,5 @@ public class LoginFragment extends Fragment implements Response.Listener<JSONObj
                 .commit();
 
     }
-
-
 
 }
