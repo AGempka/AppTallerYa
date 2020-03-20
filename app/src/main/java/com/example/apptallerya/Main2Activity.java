@@ -2,26 +2,49 @@ package com.example.apptallerya;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
 
-import android.app.PendingIntent;
+import android.content.ContentQueryMap;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
-public class Main2Activity extends AppCompatActivity {
-    public static final String nombre_cliente="nombre_cliente";
-    TextView txtBienvenido;
+import com.google.android.material.navigation.NavigationView;
+
+public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PerfilesTalleresFragment.OnFragmentInteractionListener {
+    private DrawerLayout drawer;
+    Adapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-       // txtBienvenido=(TextView)findViewById(R.id.txtbienvenido);
-        //String cliente=getIntent().getStringExtra("nombre_cliente");
-        //txtBienvenido.setText("¡Bienvenido "+ cliente + "!");
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawer = findViewById(R.id.drawer_layout);
+
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().replace(R.id.drawer_layout, new PerfilesTalleresFragment()).commit();
+
+
+
+
     }
-}
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -50,4 +73,12 @@ public class Main2Activity extends AppCompatActivity {
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
+
+
+
+}
