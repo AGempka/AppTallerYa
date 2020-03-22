@@ -198,7 +198,7 @@
                 android:layout_height="24dp"
                 android:gravity="center_horizontal"
 
-                android:tint="#454545"
+                android:tint="#2B2B2B"
                 app:srcCompat="@android:drawable/ic_menu_today" />
 
             <TextView
