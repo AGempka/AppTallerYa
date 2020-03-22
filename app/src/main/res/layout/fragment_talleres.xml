@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/laythree"
-        android:background="@drawable/fondo">
+        android:background="@drawable/taller">
 
         <include layout="@layout/toolbar_profilefour"/>
 
