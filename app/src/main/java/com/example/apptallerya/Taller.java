@@ -5,24 +5,54 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 public class Taller {
-   private Integer idcliente;
-   private String nombre_taller, direccion_taller, telefono_taller, password_taller;
-   private String imagen1_taller, imagen2_taller, imagen3_taller;
-   private Bitmap img1, img2;
-   private double evaluacion_taller;
+    private Integer idcliente;
+    private String nombre_taller, direccion_taller, telefono_taller, password_taller;
+    private String imagen1_taller, imagen2_taller, imagen3_taller, imagen_lista;
+    private Bitmap img1, img2, img3;
+    private double evaluacion_taller;
 
-    public Taller(Integer idcliente, String nombre_taller, String direccion_taller, String telefono_taller, String password_taller, String imagen1_taller, String imagen2_taller, String imagen3_taller, Bitmap img1, double evaluacion_taller) {
-        this.idcliente = idcliente;
-        this.nombre_taller = nombre_taller;
-        this.direccion_taller = direccion_taller;
-        this.telefono_taller = telefono_taller;
-        this.password_taller = password_taller;
-        this.imagen1_taller = imagen1_taller;
-        this.imagen2_taller = imagen2_taller;
-        this.imagen3_taller = imagen3_taller;
-        this.img1 = img1;
-        this.evaluacion_taller = evaluacion_taller;
+    public Taller(String imagen_lista) {
+        this.imagen_lista = imagen_lista;
     }
+
+    public String getImagen_lista() {
+        return imagen_lista;
+    }
+
+    public void setImagen1_taller(String imagen1_taller) {
+
+        this.imagen1_taller = imagen1_taller;
+
+        try {
+            byte[] byteCode = Base64.decode(imagen1_taller, Base64.DEFAULT);
+            this.img1 = BitmapFactory.decodeByteArray(byteCode, 0, byteCode.length);
+
+            //  int alto = 150;//alto en pixeles
+            // int ancho = 200;//ancho en pixeles
+            //Bitmap foto = BitmapFactory.decodeByteArray(byteCode, 0, byteCode.length);
+            // this.img1 = Bitmap.createScaledBitmap(foto, ancho, alto, true);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setImagen_lista(String imagen_lista) {
+        this.imagen_lista = imagen_lista;
+
+        try {
+            byte[] byteCode = Base64.decode(imagen_lista, Base64.DEFAULT);
+            int alto = 400;//alto en pixeles
+            int ancho = 450;//ancho en pixeles
+            Bitmap foto = BitmapFactory.decodeByteArray(byteCode, 0, byteCode.length);
+            this.img2 = Bitmap.createScaledBitmap(foto, ancho, alto, true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public Integer getIdcliente() {
         return idcliente;
@@ -68,27 +98,6 @@ public class Taller {
         return imagen1_taller;
     }
 
-    public void setImagen1_taller(String imagen1_taller) {
-
-            this.imagen1_taller = imagen1_taller;
-
-            try {
-                byte[] byteCode= Base64.decode(imagen1_taller,Base64.DEFAULT);
-               // this.img1= BitmapFactory.decodeByteArray(byteCode,0,byteCode.length);
-
-               int alto=150;//alto en pixeles
-                int ancho=200;//ancho en pixeles
-
-                Bitmap foto= BitmapFactory.decodeByteArray(byteCode,0,byteCode.length);
-                this.img1=Bitmap.createScaledBitmap(foto,ancho,alto,true);
-
-
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-
-
     public String getImagen2_taller() {
         return imagen2_taller;
     }
@@ -113,6 +122,23 @@ public class Taller {
         this.evaluacion_taller = evaluacion_taller;
     }
 
+    public Bitmap getImg2() {
+        return img2;
+    }
+
+    public void setImg2(Bitmap img2) {
+        this.img2 = img2;
+    }
+
+    public Bitmap getImg3() {
+        return img3;
+    }
+
+    public void setImg3(Bitmap img3) {
+        this.img3 = img3;
+    }
+
+
     @Override
     public String toString() {
         return "Taller{" +
@@ -124,6 +150,10 @@ public class Taller {
                 ", imagen1_taller='" + imagen1_taller + '\'' +
                 ", imagen2_taller='" + imagen2_taller + '\'' +
                 ", imagen3_taller='" + imagen3_taller + '\'' +
+                ", imagen_lista='" + imagen_lista + '\'' +
+                ", img1=" + img1 +
+                ", img2=" + img2 +
+                ", img3=" + img3 +
                 ", evaluacion_taller=" + evaluacion_taller +
                 '}';
     }

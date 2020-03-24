@@ -18,12 +18,13 @@
             android:layout_height="wrap_content"
             android:padding="8dp">
 
-            <ImageView
+            <com.github.siyamed.shapeimageview.CircularImageView
                 android:id="@+id/img1"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
-                android:padding="10dp"
-                android:background="@drawable/button_rounded_white"/>
+                android:layout_gravity="bottom"
+                android:src="@drawable/talleres" />
+
 
             <TextView
                 android:id="@+id/txtNombreTaller"

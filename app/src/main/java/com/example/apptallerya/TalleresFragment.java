@@ -4,6 +4,9 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -11,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
 /**
@@ -26,6 +31,7 @@ import android.widget.TextView;
     private static final String ARG_PARAM4 = "param4";
     private static final String ARG_PARAM5 = "param5";
     private static final String ARG_PARAM6 = "param6";
+    private static final String ARG_PARAM7 = "param7";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -41,6 +47,13 @@ import android.widget.TextView;
     Double evaTaller;
     String img1Taller;
     String img2Taller;
+    String img3Taller;
+
+
+
+    ArrayList<Taller> list;
+    AdapterListaImg adapter;
+    RecyclerView recyclerView;
 
     public TalleresFragment() {
         // Required empty public constructor
@@ -49,15 +62,16 @@ import android.widget.TextView;
 
     // TODO: Rename and change types and number of parameters
     public static TalleresFragment newInstance(String nombre_taller, String telefono_taller, String direccion_taller,
-                                              Double evaluacion_taller, String imagen1_taller, String imagen2_taller) {
+                                              Double evaluacion_taller, String imagen1_taller, String imagen2_taller, String imagen3_taller) {
         TalleresFragment fragment = new TalleresFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, nombre_taller);
         args.putString(ARG_PARAM2, telefono_taller);
         args.putString(ARG_PARAM3, direccion_taller);
-        args.putString(ARG_PARAM4, String.valueOf(evaluacion_taller));
+        args.putDouble(ARG_PARAM4, evaluacion_taller);
         args.putString(ARG_PARAM5, imagen1_taller);
         args.putString(ARG_PARAM6, imagen2_taller);
+        args.putString(ARG_PARAM7, imagen3_taller);
         fragment.setArguments(args);
         return fragment;
     }
@@ -72,6 +86,7 @@ import android.widget.TextView;
             evaTaller=getArguments().getDouble(ARG_PARAM4);
             img1Taller=getArguments().getString(ARG_PARAM5);
             img2Taller=getArguments().getString(ARG_PARAM6);
+            img3Taller=getArguments().getString(ARG_PARAM7);
         }
     }
 
@@ -84,14 +99,30 @@ import android.widget.TextView;
         img1logo=(ImageView) v.findViewById(R.id.img1Logo);
         //poner acá evaluacion
         txtDireccion=(TextView)v.findViewById(R.id.txtDireccionTaller);
-        //ver cómo carajos se agrega imagen y transformar imagen2 en la clase Taller
+
         txtNombre.setText(nomTaller);
         txtTelefono.setText(telTaller);
         txtDireccion.setText(dirTaller);
-        byte[] byteCode= Base64.decode(img1Taller,Base64.DEFAULT);
-       img1logo.setImageBitmap(BitmapFactory.decodeByteArray(byteCode,0,byteCode.length));
 
-        //imAgen.setImageResource(ima);
+        byte[] byteCode= Base64.decode(img1Taller,Base64.DEFAULT);
+        img1logo.setImageBitmap(BitmapFactory.decodeByteArray(byteCode,0,byteCode.length));
+
+        String[] imagen_lista ={img2Taller, img3Taller};
+        recyclerView = (RecyclerView) v.findViewById(R.id.recyclerviewFotos);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL,false));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        list = new ArrayList<>();
+        adapter = new AdapterListaImg(this.getContext(), list);
+        for (int i= 0 ; i<imagen_lista.length ; i++) {
+
+            Taller taller = new Taller(imagen_lista[i]);
+            taller.setImagen_lista(imagen_lista[i]);
+            list.add(taller);
+
+        }
+        recyclerView.setAdapter(adapter);
         return v;
     }
 

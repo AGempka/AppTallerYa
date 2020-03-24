@@ -14,20 +14,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/laythree"
+        android:layout_marginBottom="0dp"
         android:background="@drawable/taller">
-
-        <include layout="@layout/toolbar_profilefour"/>
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="51dp"
             android:layout_gravity="bottom"
             android:scaleType="fitXY"
             android:src="@drawable/bgshape" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="154dp"
             android:layout_gravity="bottom"
             android:layout_marginBottom="20dp"
             android:gravity="center">
@@ -38,27 +37,25 @@
 
                 <com.github.siyamed.shapeimageview.CircularImageView
                     android:id="@+id/img1Logo"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_gravity="bottom" />
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/talleres" />
 
 
             </FrameLayout>
         </LinearLayout>
-
-
     </FrameLayout>
 
-
     <LinearLayout
+        android:id="@+id/laythree"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_above="@+id/laytwo"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:layout_marginBottom="0dp"
         android:gravity="center"
-        android:id="@+id/laythree"
-        android:layout_above="@+id/laytwo"
         android:orientation="vertical">
 
 
@@ -69,6 +66,7 @@
             android:layout_marginBottom="7dp"
             android:gravity="center"
             android:lineSpacingExtra="5sp"
+            android:text="NOMBRE DE TALLER"
             android:textColor="#131314"
             android:textSize="23sp" />
 
@@ -81,8 +79,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_location_on_black_24dp"
-                android:tint="#88888f" />
+                android:tint="#88888f"
+                app:srcCompat="@drawable/ic_location_on_black_24dp" />
 
             <TextView
                 android:id="@+id/txtDireccionTaller"
@@ -91,6 +89,7 @@
                 android:layout_marginStart="7dp"
                 android:layout_marginLeft="7dp"
                 android:lineSpacingExtra="2.6sp"
+                android:text="CDE"
                 android:textColor="#88888f"
                 android:textSize="13.4sp" />
 
@@ -100,8 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:gravity="center"
-            >
+            android:gravity="center">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -116,6 +114,7 @@
                 android:layout_marginStart="7dp"
                 android:layout_marginLeft="7dp"
                 android:lineSpacingExtra="2.6sp"
+                android:text="0983638421"
                 android:textColor="#88888f"
                 android:textSize="13.4sp" />
 
@@ -124,14 +123,19 @@
 
 
     <LinearLayout
+        android:id="@+id/laytwo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="3"
-        android:id="@+id/laytwo"
-        android:layout_margin="20dp"
         android:layout_above="@+id/btn_layout"
         android:layout_gravity="bottom"
-        android:orientation="horizontal">
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="0dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -218,20 +222,20 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30.3dp"
-        android:layout_marginLeft="30.3dp"
-        android:layout_marginBottom="30.3dp"
         android:id="@+id/btn_layout"
-        android:orientation="horizontal"
-        android:layout_marginStart="30.3dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="30.3dp"
+        android:layout_marginLeft="30.3dp"
+        android:layout_marginTop="30.3dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerviewFotos"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="200dp" />
 
 
     </LinearLayout>
