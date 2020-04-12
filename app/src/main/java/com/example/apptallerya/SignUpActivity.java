@@ -1,5 +1,6 @@
 package com.example.apptallerya;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
@@ -18,16 +19,29 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONObject;
 
-public class SignUpActivity extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener{
+import java.util.HashMap;
+import java.util.Map;
 
-    RequestQueue rq;
-    JsonRequest jrq;
+public class SignUpActivity extends Fragment {
+
+    //RequestQueue rq;
+    //JsonRequest jrq;
     EditText txtCorreo,txtPassword,txtNombre,txtDireccion,txtTelefono;
     Button btnRegistrar;
     Button btnInicio;
+    String nombre_cliente, correo_cliente, password_cliente, direccion_cliente, telefono_cliente;
+    Cliente cliente;
+    FirebaseAuth mAuth;
+    DatabaseReference mDataBase;
 
 
     @Override
@@ -41,21 +55,35 @@ public class SignUpActivity extends Fragment implements Response.Listener<JSONOb
         txtTelefono=(EditText)vista.findViewById(R.id.txtTelefono);
         btnInicio=(Button)vista.findViewById(R.id.btnInicio);
         btnRegistrar=(Button)vista.findViewById(R.id.btnRegistrar);
-        rq= Volley.newRequestQueue(getContext());
-
-
+        //rq= Volley.newRequestQueue(getContext());
+        mAuth= FirebaseAuth.getInstance();
+        mDataBase= FirebaseDatabase.getInstance().getReference();
         btnInicio.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 iniciar_sesion();
             }
         });
-
-
         btnRegistrar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                registrar_usuario();
+                nombre_cliente = txtNombre.getText().toString();
+                correo_cliente=txtCorreo.getText().toString();
+                telefono_cliente=txtTelefono.getText().toString();
+                password_cliente=txtPassword.getText().toString();
+
+                if(!nombre_cliente.isEmpty()&&!correo_cliente.isEmpty()&&!telefono_cliente.isEmpty()&&!password_cliente.isEmpty()){
+                    if (password_cliente.length()>=6){
+                        registrar_usuario();
+
+                    }else{
+                        Toast.makeText(getContext(), "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else{
+                    Toast.makeText(getContext(), "Debe completar los campos", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -66,19 +94,7 @@ public class SignUpActivity extends Fragment implements Response.Listener<JSONOb
     }
 
 
-    @Override
-    public void onErrorResponse(VolleyError error){
-        Toast.makeText(getContext(),"No se puedo registrar el usuario "+error.toString()+txtNombre.getText().toString(),Toast.LENGTH_LONG).show();
-    }
 
-    @Override
-    public void onResponse(JSONObject response){
-        Toast.makeText(getContext(),"Se registró correctamente el usuario "+txtNombre.getText().toString(),Toast.LENGTH_SHORT).show();
-        limpiarCajas();
-        Intent intencion = new Intent(getContext(), LoginFragment.class);
-        startActivity(intencion);
-
-    }
 
 
     void limpiarCajas(){
@@ -102,11 +118,56 @@ public class SignUpActivity extends Fragment implements Response.Listener<JSONOb
     }
 
     void registrar_usuario(){
-        String url="https://tallerya.000webhostapp.com//registrar.php?&correo_cliente="+txtCorreo.getText().toString()+"&password_cliente="+txtPassword.getText().toString()
-                +"&nombre_cliente="+txtNombre.getText().toString()+"&telefono_cliente="+txtTelefono.getText().toString();
+       // String url="https://tallerya.000webhostapp.com//regisrar.php?&correo_cliente="+txtCorreo.getText().toString()+"&password_cliente="+txtPassword.getText().toString()
+         //       +"&nombre_cliente="+txtNombre.getText().toString()+"&telefono_cliente="+txtTelefono.getText().toString();
+        //jrq=new JsonObjectRequest(Request.Method.GET,url,null,this,this);
+       // rq.add(jrq);
 
-        jrq=new JsonObjectRequest(Request.Method.GET,url,null,this,this);
-        rq.add(jrq);
+    mAuth.createUserWithEmailAndPassword(correo_cliente, password_cliente).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        @Override
+        public void onComplete(@NonNull Task<AuthResult> task) {
+            if(task.isSuccessful()){
+
+                Map<String, Object> map = new HashMap<>();
+                map.put("nombre_cliente", nombre_cliente);
+                map.put("correo_cliente", correo_cliente);
+                map.put("password_cliente", password_cliente);
+                map.put("telefono_cliente", telefono_cliente);
+
+                String id=mAuth.getCurrentUser().getUid();
+                mDataBase.child("Clientes").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task2) {
+                        if(task2.isSuccessful()){
+                                iniciar_sesion();
+
+                        }else{
+                            Toast.makeText(getContext(), "No se pudieron crear los datos correctamente", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+            }else{
+                               Toast.makeText(getContext(), "No se pudo registrar el usuario", Toast.LENGTH_SHORT).show();
+
+            }
+
+        }
+    });
+
     }
+
+    //PARA MANTENER SESIÓN
+    @Override
+    public void onStart() {
+        super.onStart();
+        //SÍ YA AUTENTICASTE O NO
+        if(mAuth.getCurrentUser()!=null){
+            startActivity(new Intent(getContext(), Main2Activity.class));
+            //getfinish
+            getActivity().getFragmentManager().popBackStack();
+        }
+    }
+
 
 }

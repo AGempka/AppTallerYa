@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "362284500170",
+    "firebase_url": "https://tallerya-538cf.firebaseio.com",
+    "project_id": "tallerya-538cf",
+    "storage_bucket": "tallerya-538cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362284500170:android:f8155b5d2da7f86ec1e033",
+        "android_client_info": {
+          "package_name": "com.example.apptallerya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "362284500170-c4snejh8eqs018fb3clesc4ve3m6hn88.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8d5jpqtxgKCcMN9BhUg-ZfOSFwrHlsks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362284500170-c4snejh8eqs018fb3clesc4ve3m6hn88.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

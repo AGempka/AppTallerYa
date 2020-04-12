@@ -31,7 +31,11 @@
             android:id="@+id/nav_nosotros"
             android:icon="@drawable/ic_nosotros"
             android:title="Quienes somos" />
-        />
+
+        <item
+            android:id="@+id/nav_sesion"
+            android:title="CERRAR SESIÓN" />
+
     </item>
 
 </menu>

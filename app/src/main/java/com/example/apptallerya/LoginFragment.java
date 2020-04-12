@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
@@ -18,16 +19,22 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginFragment extends Fragment implements  Response.Listener<JSONObject>, Response.ErrorListener {
-    RequestQueue rq;
-    JsonRequest jrq;
+public class LoginFragment extends Fragment  {
+   // RequestQueue rq;
+    //JsonRequest jrq;
     EditText txtCorreo, txtPassword;
     Button btnSesion, btnCrear;
+    String correo_cliente, password_cliente;
+    FirebaseAuth mAuth;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,12 +46,21 @@ public class LoginFragment extends Fragment implements  Response.Listener<JSONOb
 
         btnSesion = (Button) vista.findViewById(R.id.btnSesion);
         btnCrear = (Button) vista.findViewById(R.id.btnCrear);
-        rq = Volley.newRequestQueue(getContext());
-
+       // rq = Volley.newRequestQueue(getContext());
+        mAuth=FirebaseAuth.getInstance();
         btnSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                iniciar_sesion();
+                correo_cliente=txtCorreo.getText().toString();
+                password_cliente=txtPassword.getText().toString();
+                if (!correo_cliente.isEmpty() && !correo_cliente.isEmpty()) {
+                    iniciar_sesion();
+                }else{
+                    Toast.makeText(getContext(), "Debe completar los campos", Toast.LENGTH_SHORT).show();
+                }
+
+
+
             }
         });
 
@@ -59,43 +75,30 @@ public class LoginFragment extends Fragment implements  Response.Listener<JSONOb
 
         return vista;
     }
-    @Override
-    public void onErrorResponse(VolleyError error) {
-        Toast.makeText(getContext(), "No se encontró el usuario " +error.toString()+ txtCorreo.getText().toString(), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onResponse(JSONObject response) {
-        Toast.makeText(getContext(), "Se encontró el usuario " + txtCorreo.getText().toString(), Toast.LENGTH_SHORT).show();
-        Cliente cliente = new Cliente();
-        JSONArray jsonArray = response.optJSONArray("datos");
-        JSONObject jsonObject = null;
-
-        try {
-            jsonObject = jsonArray.getJSONObject(0);
-            cliente.setNombre_cliente(jsonObject.optString("nombre_cliente"));
-            cliente.setCorreo_cliente(jsonObject.optString("correo_cliente"));
-            cliente.setPassword_cliente(jsonObject.optString("password_cliente"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        Intent intencion = new Intent(getContext(), Main2Activity.class);
-        startActivity(intencion);
 
 
-    }
 
 
     void iniciar_sesion() {
 
+       // String url = "https://tallerya.000webhostapp.com//sesion.php?correo_cliente=" + txtCorreo.getText().toString() +
+       //         "&password_cliente=" + txtPassword.getText().toString();
+        //jrq = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+      //  rq.add(jrq);
 
-        String url = "https://tallerya.000webhostapp.com//sesion.php?correo_cliente=" + txtCorreo.getText().toString() +
-                "&password_cliente=" + txtPassword.getText().toString();
-        jrq = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-        rq.add(jrq);
+mAuth.signInWithEmailAndPassword(correo_cliente, password_cliente).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+    @Override
+    public void onComplete(@NonNull Task<AuthResult> task) {
+        if (task.isSuccessful()){
+            startActivity(new Intent(getContext(), Main2Activity.class));
+           // finish();
+        }else{
+            Toast.makeText(getContext(), "No se pudo iniciar sesión. Compruebe los datos.", Toast.LENGTH_SHORT).show();
 
+        }
 
+    }
+});
     }
 
     void registrar_usuario(){

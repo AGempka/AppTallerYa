@@ -1,5 +1,6 @@
 package com.example.apptallerya;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,4 +15,6 @@ public class SesionActivity extends AppCompatActivity {
         fm.beginTransaction().replace(R.id.escenario, new LoginFragment()).commit();
 
     }
+
+
 }

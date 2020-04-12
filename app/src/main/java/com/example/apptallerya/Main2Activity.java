@@ -19,10 +19,13 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PerfilesTalleresFragment.OnFragmentInteractionListener {
     private DrawerLayout drawer;
     Adapter adapter;
+    FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +36,13 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         setSupportActionBar(toolbar);
 
         drawer = findViewById(R.id.drawer_layout);
-
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().replace(R.id.drawer_layout, new PerfilesTalleresFragment()).commit();
 
-
+          mAuth=FirebaseAuth.getInstance();
 
 
     }
@@ -69,9 +70,19 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
             //       new MessageFragment()).commit();
             //break;
+            case R.id.nav_sesion:
+               cerrar_sesion();
+                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //CERRANDO SESIÓN
+    private void cerrar_sesion() {
+    mAuth.signOut();
+    startActivity(new Intent(Main2Activity.this, SesionActivity.class));
+    finish();
     }
 
     @Override
