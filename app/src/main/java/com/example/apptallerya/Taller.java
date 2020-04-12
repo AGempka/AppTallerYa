@@ -43,8 +43,8 @@ public class Taller {
 
         try {
             byte[] byteCode = Base64.decode(imagen_lista, Base64.DEFAULT);
-            int alto = 400;//alto en pixeles
-            int ancho = 450;//ancho en pixeles
+            int alto = 500;//alto en pixeles
+            int ancho = 550;//ancho en pixeles
             Bitmap foto = BitmapFactory.decodeByteArray(byteCode, 0, byteCode.length);
             this.img2 = Bitmap.createScaledBitmap(foto, ancho, alto, true);
 

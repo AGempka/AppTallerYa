@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ import java.util.ArrayList;
     String nomTaller;
     String telTaller;
     String dirTaller;
-    Double evaTaller;
+    String  evaTaller;
     String img1Taller;
     String img2Taller;
     String img3Taller;
@@ -54,6 +55,7 @@ import java.util.ArrayList;
     ArrayList<Taller> list;
     AdapterListaImg adapter;
     RecyclerView recyclerView;
+   LinearLayout btnComentar;
 
     public TalleresFragment() {
         // Required empty public constructor
@@ -68,7 +70,7 @@ import java.util.ArrayList;
         args.putString(ARG_PARAM1, nombre_taller);
         args.putString(ARG_PARAM2, telefono_taller);
         args.putString(ARG_PARAM3, direccion_taller);
-        args.putDouble(ARG_PARAM4, evaluacion_taller);
+        args.putString(ARG_PARAM4, String.valueOf(evaluacion_taller));
         args.putString(ARG_PARAM5, imagen1_taller);
         args.putString(ARG_PARAM6, imagen2_taller);
         args.putString(ARG_PARAM7, imagen3_taller);
@@ -83,7 +85,7 @@ import java.util.ArrayList;
             nomTaller = getArguments().getString(ARG_PARAM1);
             telTaller = getArguments().getString(ARG_PARAM2);
             dirTaller= getArguments().getString(ARG_PARAM3);
-            evaTaller=getArguments().getDouble(ARG_PARAM4);
+            evaTaller=getArguments().getString(ARG_PARAM4);
             img1Taller=getArguments().getString(ARG_PARAM5);
             img2Taller=getArguments().getString(ARG_PARAM6);
             img3Taller=getArguments().getString(ARG_PARAM7);
@@ -97,12 +99,21 @@ import java.util.ArrayList;
         txtNombre=(TextView) v.findViewById(R.id.txtNombreTaller);
         txtTelefono=(TextView) v.findViewById(R.id.txtTelefonoTaller);
         img1logo=(ImageView) v.findViewById(R.id.img1Logo);
-        //poner acá evaluacion
         txtDireccion=(TextView)v.findViewById(R.id.txtDireccionTaller);
+        txtEvaluacion=(TextView)v.findViewById(R.id.txtValoracion);
+        btnComentar=(LinearLayout)v.findViewById(R.id.btnComentarios);
+
+        btnComentar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrir_comentarios();
+            }
+        });
 
         txtNombre.setText(nomTaller);
         txtTelefono.setText(telTaller);
         txtDireccion.setText(dirTaller);
+        txtEvaluacion.setText(evaTaller);
 
         byte[] byteCode= Base64.decode(img1Taller,Base64.DEFAULT);
         img1logo.setImageBitmap(BitmapFactory.decodeByteArray(byteCode,0,byteCode.length));
@@ -124,6 +135,15 @@ import java.util.ArrayList;
         }
         recyclerView.setAdapter(adapter);
         return v;
+    }
+
+    private void abrir_comentarios() {
+        ComentariosFragment fr=new ComentariosFragment();
+        //fr.setArguments(bn);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.drawer_layout,fr)
+                .addToBackStack(null)
+                .commit();
     }
 
 }
