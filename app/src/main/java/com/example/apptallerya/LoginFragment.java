@@ -32,9 +32,10 @@ public class LoginFragment extends Fragment  {
    // RequestQueue rq;
     //JsonRequest jrq;
     EditText txtCorreo, txtPassword;
-    Button btnSesion, btnCrear;
+    Button btnSesion, btnCrear, btnRecuperarContraseña;
     String correo_cliente, password_cliente;
     FirebaseAuth mAuth;
+
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +47,7 @@ public class LoginFragment extends Fragment  {
 
         btnSesion = (Button) vista.findViewById(R.id.btnSesion);
         btnCrear = (Button) vista.findViewById(R.id.btnCrear);
+        btnRecuperarContraseña=(Button)vista.findViewById(R.id.btnRecuperarContraseña);
        // rq = Volley.newRequestQueue(getContext());
         mAuth=FirebaseAuth.getInstance();
         btnSesion.setOnClickListener(new View.OnClickListener() {
@@ -72,10 +74,29 @@ public class LoginFragment extends Fragment  {
             }
         });
 
+        btnRecuperarContraseña.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recuperar_contraseña();
+
+
+
+
+            }
+        });
 
         return vista;
     }
 
+    private void recuperar_contraseña() {
+        ResetPassword fr=new ResetPassword();
+        //fr.setArguments(fr);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.escenario,fr)
+                .addToBackStack(null)
+                .commit();
+
+    }
 
 
 
