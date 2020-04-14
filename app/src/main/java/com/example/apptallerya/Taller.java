@@ -4,12 +4,49 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
-public class Taller {
-    private Integer idcliente;
-    private String nombre_taller, direccion_taller, telefono_taller, password_taller;
-    private String imagen1_taller, imagen2_taller, imagen3_taller, imagen_lista;
-    private Bitmap img1, img2, img3;
+import java.io.Serializable;
+
+public class Taller implements Serializable {
+    private String nombre_taller, direccion_taller, telefono_taller, correo_taller;
+    private String img1_taller, img2_taller, img_logo, imagen_lista;
+    private Long password_taller;
     private double evaluacion_taller;
+
+    public String getCorreo_taller() {
+        return correo_taller;
+    }
+
+    public void setCorreo_taller(String correo_taller) {
+        this.correo_taller = correo_taller;
+    }
+
+    public String getImg1_taller() {
+        return img1_taller;
+    }
+
+    public void setImg1_taller(String img1_taller) {
+        this.img1_taller = img1_taller;
+    }
+
+    public String getImg2_taller() {
+        return img2_taller;
+    }
+
+    public void setImg2_taller(String img2_taller) {
+        this.img2_taller = img2_taller;
+    }
+
+    public String getImg_logo() {
+        return img_logo;
+    }
+
+    public void setImg_logo(String img_logo) {
+        this.img_logo = img_logo;
+    }
+
+    public void setImagen_lista(String imagen_lista) {
+        this.imagen_lista = imagen_lista;
+    }
 
     public Taller(String imagen_lista) {
         this.imagen_lista = imagen_lista;
@@ -17,49 +54,6 @@ public class Taller {
 
     public String getImagen_lista() {
         return imagen_lista;
-    }
-
-    public void setImagen1_taller(String imagen1_taller) {
-
-        this.imagen1_taller = imagen1_taller;
-
-        try {
-            byte[] byteCode = Base64.decode(imagen1_taller, Base64.DEFAULT);
-            this.img1 = BitmapFactory.decodeByteArray(byteCode, 0, byteCode.length);
-
-            //  int alto = 150;//alto en pixeles
-            // int ancho = 200;//ancho en pixeles
-            //Bitmap foto = BitmapFactory.decodeByteArray(byteCode, 0, byteCode.length);
-            // this.img1 = Bitmap.createScaledBitmap(foto, ancho, alto, true);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setImagen_lista(String imagen_lista) {
-        this.imagen_lista = imagen_lista;
-
-        try {
-            byte[] byteCode = Base64.decode(imagen_lista, Base64.DEFAULT);
-            int alto = 500;//alto en pixeles
-            int ancho = 550;//ancho en pixeles
-            Bitmap foto = BitmapFactory.decodeByteArray(byteCode, 0, byteCode.length);
-            this.img2 = Bitmap.createScaledBitmap(foto, ancho, alto, true);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public Integer getIdcliente() {
-        return idcliente;
-    }
-
-    public void setIdcliente(Integer idcliente) {
-        this.idcliente = idcliente;
     }
 
     public String getNombre_taller() {
@@ -86,32 +80,12 @@ public class Taller {
         this.telefono_taller = telefono_taller;
     }
 
-    public String getPassword_taller() {
+    public Long getPassword_taller() {
         return password_taller;
     }
 
-    public void setPassword_taller(String password_taller) {
+    public void setPassword_taller(Long password_taller) {
         this.password_taller = password_taller;
-    }
-
-    public String getImagen1_taller() {
-        return imagen1_taller;
-    }
-
-    public String getImagen2_taller() {
-        return imagen2_taller;
-    }
-
-    public void setImagen2_taller(String imagen2_taller) {
-        this.imagen2_taller = imagen2_taller;
-    }
-
-    public String getImagen3_taller() {
-        return imagen3_taller;
-    }
-
-    public void setImagen3_taller(String imagen3_taller) {
-        this.imagen3_taller = imagen3_taller;
     }
 
     public double getEvaluacion_taller() {
@@ -122,61 +96,28 @@ public class Taller {
         this.evaluacion_taller = evaluacion_taller;
     }
 
-    public Bitmap getImg2() {
-        return img2;
-    }
-
-    public void setImg2(Bitmap img2) {
-        this.img2 = img2;
-    }
-
-    public Bitmap getImg3() {
-        return img3;
-    }
-
-    public void setImg3(Bitmap img3) {
-        this.img3 = img3;
-    }
-
 
     @Override
     public String toString() {
         return "Taller{" +
-                "idcliente=" + idcliente +
-                ", nombre_taller='" + nombre_taller + '\'' +
+                "nombre_taller='" + nombre_taller + '\'' +
                 ", direccion_taller='" + direccion_taller + '\'' +
                 ", telefono_taller='" + telefono_taller + '\'' +
-                ", password_taller='" + password_taller + '\'' +
-                ", imagen1_taller='" + imagen1_taller + '\'' +
-                ", imagen2_taller='" + imagen2_taller + '\'' +
-                ", imagen3_taller='" + imagen3_taller + '\'' +
-                ", imagen_lista='" + imagen_lista + '\'' +
-                ", img1=" + img1 +
-                ", img2=" + img2 +
-                ", img3=" + img3 +
+                ", img_logo='" + img_logo + '\'' +
                 ", evaluacion_taller=" + evaluacion_taller +
                 '}';
     }
 
-    public Taller(String nombre_taller, String direccion_taller, String imagen1_taller, double evaluacion_taller) {
+    public Taller(String nombre_taller, String direccion_taller, String img_logo, double evaluacion_taller) {
         this.nombre_taller = nombre_taller;
         this.direccion_taller = direccion_taller;
-        this.imagen1_taller = imagen1_taller;
+        this.img_logo=img_logo;
         this.evaluacion_taller = evaluacion_taller;
     }
 
-    public Bitmap getImg1() {
-        return img1;
-    }
-
-    public void setImg1(Bitmap img1) {
-        this.img1 = img1;
-    }
 
     public Taller() {
     }
 
-    public Taller(Integer idcliente) {
-        this.idcliente = idcliente;
-    }
+
 }

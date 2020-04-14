@@ -1,6 +1,7 @@
 package com.example.apptallerya;
 
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -48,7 +51,7 @@ import java.util.ArrayList;
     String  evaTaller;
     String img1Taller;
     String img2Taller;
-    String img3Taller;
+    String imgLogo;
 
 
 
@@ -64,16 +67,16 @@ import java.util.ArrayList;
 
     // TODO: Rename and change types and number of parameters
     public static TalleresFragment newInstance(String nombre_taller, String telefono_taller, String direccion_taller,
-                                              Double evaluacion_taller, String imagen1_taller, String imagen2_taller, String imagen3_taller) {
+                                              Double evaluacion_taller, String img1_taller, String img2_taller, String img_logo) {
         TalleresFragment fragment = new TalleresFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, nombre_taller);
         args.putString(ARG_PARAM2, telefono_taller);
         args.putString(ARG_PARAM3, direccion_taller);
         args.putString(ARG_PARAM4, String.valueOf(evaluacion_taller));
-        args.putString(ARG_PARAM5, imagen1_taller);
-        args.putString(ARG_PARAM6, imagen2_taller);
-        args.putString(ARG_PARAM7, imagen3_taller);
+        args.putString(ARG_PARAM5, img1_taller);
+        args.putString(ARG_PARAM6, img2_taller);
+        args.putString(ARG_PARAM7, img_logo);
         fragment.setArguments(args);
         return fragment;
     }
@@ -88,7 +91,7 @@ import java.util.ArrayList;
             evaTaller=getArguments().getString(ARG_PARAM4);
             img1Taller=getArguments().getString(ARG_PARAM5);
             img2Taller=getArguments().getString(ARG_PARAM6);
-            img3Taller=getArguments().getString(ARG_PARAM7);
+            imgLogo=getArguments().getString(ARG_PARAM7);
         }
     }
 
@@ -115,10 +118,11 @@ import java.util.ArrayList;
         txtDireccion.setText(dirTaller);
         txtEvaluacion.setText(evaTaller);
 
-        byte[] byteCode= Base64.decode(img1Taller,Base64.DEFAULT);
-        img1logo.setImageBitmap(BitmapFactory.decodeByteArray(byteCode,0,byteCode.length));
+        //PASSAR IMAGENSSSSSSSSSS SOCORRO
+        Picasso.get().load(imgLogo).into(img1logo);
 
-        String[] imagen_lista ={img2Taller, img3Taller};
+
+        String[] imagen_lista ={img1Taller, img2Taller};
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerviewFotos);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL,false));

@@ -82,7 +82,8 @@
                 android:lineSpacingExtra="2.6sp"
                 android:text="4.2"
                 android:textColor="#88888f"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:layout_marginLeft="7dp" />
 
             <ImageView
                 android:layout_width="18dp"

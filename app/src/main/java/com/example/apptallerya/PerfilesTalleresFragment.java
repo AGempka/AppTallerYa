@@ -30,6 +30,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,50 +45,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PerfilesTalleresFragment extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener, Adapter.OnItemClickListener {
+public class PerfilesTalleresFragment extends Fragment  implements Adapter.OnItemClickListener{
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    List<Taller> tallerList;
+    ArrayList<Taller> tallerList;
     RecyclerView recyclerView;
-    //EditText etBuscador;
-
     ProgressDialog dialog;
 
-    RequestQueue request;
-    JsonObjectRequest jsonObjectRequest;
-
     Adapter adaptador;
+    DatabaseReference reference;
 
     public PerfilesTalleresFragment() {
     }
 
-
-    public static PerfilesTalleresFragment newInstance(String param1, String param2) {
-        PerfilesTalleresFragment fragment = new PerfilesTalleresFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-
-        }
-    }
 
     @Nullable
     @Override
@@ -92,12 +69,28 @@ public class PerfilesTalleresFragment extends Fragment implements Response.Liste
         recyclerView = (RecyclerView) vista.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        tallerList = new ArrayList<>();
-        //etBuscador = (EditText) vista.findViewById(R.id.etBuscador);
-        request = Volley.newRequestQueue(getContext());
-        cargarWebService();
+        tallerList = new ArrayList<Taller>();
+        reference = FirebaseDatabase.getInstance().getReference("Talleres");
 
-        //probando para abrir otro fragment no sé que hago ayuda
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Taller t = dataSnapshot1.getValue(Taller.class);
+                    tallerList.add(t);
+                }
+                adaptador = new Adapter(getContext(), tallerList);
+                recyclerView.setAdapter(adaptador);
+                adaptador.setOnItemClickListener(PerfilesTalleresFragment.this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getContext(), "Ops... Algo anda mal", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
 
         return vista;
@@ -106,59 +99,6 @@ public class PerfilesTalleresFragment extends Fragment implements Response.Liste
 
 
 
-    private void cargarWebService() {
-        dialog = new ProgressDialog(getContext());
-        dialog.setMessage("Buscando talleres");
-        dialog.show();
-
-        String url = "https://tallerya.000webhostapp.com//talleresperfiles.php";
-        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-        //request.add(jsonObjectRequest);
-        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
-
-    }
-
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-
-    }
-
-    @Override
-    public void onResponse(JSONObject response) {
-        Taller taller = null;
-
-        JSONArray json = response.optJSONArray("taller");
-
-        try {
-
-            for (int i = 0; i < json.length(); i++) {
-                taller = new Taller();
-                JSONObject jsonObject = null;
-                jsonObject = json.getJSONObject(i);
-
-                taller.setNombre_taller(jsonObject.optString("nombre_taller"));
-                taller.setDireccion_taller(jsonObject.optString("direccion_taller"));
-                taller.setTelefono_taller(jsonObject.optString("telefono_taller"));
-                taller.setEvaluacion_taller(Double.parseDouble(jsonObject.optString("evaluacion_taller")));
-                taller.setImagen1_taller(jsonObject.optString("imagen1_taller"));
-                taller.setImagen2_taller(jsonObject.optString("imagen2_taller"));
-                taller.setImagen3_taller(jsonObject.optString("imagen3_taller"));
-                
-                tallerList.add(taller);
-            }
-            dialog.hide();
-            Adapter adapter = new Adapter(tallerList);
-            recyclerView.setAdapter(adapter);
-            adapter.setOnItemClickListener(this);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" +
-                    " " + response, Toast.LENGTH_LONG).show();
-            dialog.hide();
-        }
-    }
 
 
     public void onButtonPressed(Uri uri) {
@@ -186,15 +126,15 @@ public class PerfilesTalleresFragment extends Fragment implements Response.Liste
 
 
     //probando abrir otro fragment con el click
-    @Override
+   @Override
     public void onItemClick(int position) {
-        Toast.makeText(getContext(), "Taller seleccionado "+position, Toast.LENGTH_SHORT).show();
+       Toast.makeText(getContext(), "Taller seleccionado " + position, Toast.LENGTH_SHORT).show();
 
         //ver que puedo llamar en vez de tallerlist para obtener la posición del roll
         Taller clickeditem = tallerList.get(position);
-        TalleresFragment f= TalleresFragment.newInstance(clickeditem.getNombre_taller(), clickeditem.getTelefono_taller(), clickeditem.getDireccion_taller(), clickeditem.getEvaluacion_taller(), clickeditem.getImagen1_taller(), clickeditem.getImagen2_taller(), clickeditem.getImagen3_taller());
+        TalleresFragment f = TalleresFragment.newInstance(clickeditem.getNombre_taller(), clickeditem.getTelefono_taller(), clickeditem.getDireccion_taller(), clickeditem.getEvaluacion_taller(), clickeditem.getImg1_taller(), clickeditem.getImg2_taller(), clickeditem.getImg_logo());
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.drawer_layout,f).addToBackStack(null).commit();
+        fragmentManager.beginTransaction().replace(R.id.drawer_layout, f).addToBackStack(null).commit();
 
     }
 
@@ -202,7 +142,6 @@ public class PerfilesTalleresFragment extends Fragment implements Response.Liste
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
-
 
 
 }

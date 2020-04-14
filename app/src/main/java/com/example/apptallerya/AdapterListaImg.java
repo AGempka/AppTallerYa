@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class AdapterListaImg extends RecyclerView.Adapter<AdapterListaImg.ViewHolder> {
@@ -31,8 +33,9 @@ public class AdapterListaImg extends RecyclerView.Adapter<AdapterListaImg.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull AdapterListaImg.ViewHolder holder, int position) {
-        Taller taller = list.get(position);
-        holder.imagen_lista.setImageBitmap(taller.getImg2());
+
+        Picasso.get().load(list.get(position).getImagen_lista()).into(holder.imagen_lista);
+
     }
 
     @Override
