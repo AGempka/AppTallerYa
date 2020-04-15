@@ -2,6 +2,7 @@ package com.example.apptallerya;
 
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.squareup.picasso.Picasso;
 
@@ -52,7 +55,7 @@ import java.util.ArrayList;
     String img1Taller;
     String img2Taller;
     String imgLogo;
-
+    Toolbar toolbar;
 
 
     ArrayList<Taller> list;
@@ -99,6 +102,15 @@ import java.util.ArrayList;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_talleres, container, false);
+
+        Toolbar toolbar = null;
+        toolbar = (Toolbar) v.findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_black_24dp);
+        //setSupportActionBar(toolbar);
+        //getSupportActionBar().setTitle("");
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         txtNombre=(TextView) v.findViewById(R.id.txtNombreTaller);
         txtTelefono=(TextView) v.findViewById(R.id.txtTelefonoTaller);
         img1logo=(ImageView) v.findViewById(R.id.img1Logo);
@@ -149,5 +161,7 @@ import java.util.ArrayList;
                 .addToBackStack(null)
                 .commit();
     }
+
+
 
 }

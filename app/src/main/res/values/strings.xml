@@ -3,4 +3,20 @@
     <string name="facebook_app_id">[APP_ID]</string>
     <string name="fb_login_protocol_scheme">fb[APP_ID]</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-</resources>
+
+
+        <string name="comments">Comments</string>
+        <string name="miki_ito">Miki Ito</string>
+        <string name="digital_product_designer">Digital Product \nDesigner</string>
+        <string name="freelance_designer_specialized_in_ui_and_interaction_design_born_amp_raised_in_china"><![CDATA[Freelance designer specialized in UI and interaction design, born & raised in China.]]></string>
+        <string name="_34">34</string>
+        <string name="posts">Posts</string>
+        <string name="_1256">1256</string>
+        <string name="folowers">Folowers</string>
+        <string name="_8942">8942</string>
+        <string name="following">Following</string>
+        <string name="photos">Photos</string>
+        <string name="stats">Stats</string>
+        <string name="charts">Charts</string>
+    </resources>
+
