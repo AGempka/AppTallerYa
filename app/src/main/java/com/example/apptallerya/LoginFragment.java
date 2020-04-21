@@ -1,12 +1,15 @@
 package com.example.apptallerya;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,6 +39,8 @@ public class LoginFragment extends Fragment  {
     String correo_cliente, password_cliente;
     FirebaseAuth mAuth;
 
+    public static final String STRING_PREFERENCES = "com.example.apptallerya";
+    public static final String PREFERENCE_ESTADO_BUTTON_SESION = "estado.button.noCerrar";
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +49,7 @@ public class LoginFragment extends Fragment  {
         View vista = inflater.inflate(R.layout.login_fragment, container, false);
         txtCorreo = (EditText) vista.findViewById(R.id.txtCorreo);
         txtPassword = (EditText) vista.findViewById(R.id.txtPassword);
-
+        btnNoCerrar = (RadioButton) vista.findViewById(R.id.btnNoCerrar);
         btnSesion = (Button) vista.findViewById(R.id.btnSesion);
         btnCrear = (Button) vista.findViewById(R.id.btnCrear);
         btnRecuperarContraseña=(Button)vista.findViewById(R.id.btnRecuperarContraseña);
@@ -70,9 +75,12 @@ public class LoginFragment extends Fragment  {
         btnCrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registrar_usuario();
+                guardarEstadoButton();
+                //registrar_usuario();
             }
         });
+        return vista;
+    }
 
         btnRecuperarContraseña.setOnClickListener(new View.OnClickListener() {
             @Override
