@@ -6,7 +6,10 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class SesionActivity extends AppCompatActivity {
+    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -15,6 +18,8 @@ public class SesionActivity extends AppCompatActivity {
         fm.beginTransaction().replace(R.id.escenario, new LoginFragment()).commit();
 
     }
+
+
 
 
 }

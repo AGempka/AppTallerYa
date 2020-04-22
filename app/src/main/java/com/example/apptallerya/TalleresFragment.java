@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,6 +40,7 @@ import java.util.ArrayList;
     private static final String ARG_PARAM5 = "param5";
     private static final String ARG_PARAM6 = "param6";
     private static final String ARG_PARAM7 = "param7";
+    private static final String ARG_PARAM8 = "param8";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -55,6 +57,7 @@ import java.util.ArrayList;
     String img1Taller;
     String img2Taller;
     String imgLogo;
+    String key;
     Toolbar toolbar;
 
 
@@ -70,7 +73,7 @@ import java.util.ArrayList;
 
     // TODO: Rename and change types and number of parameters
     public static TalleresFragment newInstance(String nombre_taller, String telefono_taller, String direccion_taller,
-                                              Double evaluacion_taller, String img1_taller, String img2_taller, String img_logo) {
+                                              Double evaluacion_taller, String img1_taller, String img2_taller, String img_logo, String key) {
         TalleresFragment fragment = new TalleresFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, nombre_taller);
@@ -80,6 +83,7 @@ import java.util.ArrayList;
         args.putString(ARG_PARAM5, img1_taller);
         args.putString(ARG_PARAM6, img2_taller);
         args.putString(ARG_PARAM7, img_logo);
+        args.putString(ARG_PARAM8, key);
         fragment.setArguments(args);
         return fragment;
     }
@@ -95,6 +99,7 @@ import java.util.ArrayList;
             img1Taller=getArguments().getString(ARG_PARAM5);
             img2Taller=getArguments().getString(ARG_PARAM6);
             imgLogo=getArguments().getString(ARG_PARAM7);
+            key=getArguments().getString(ARG_PARAM8);
         }
     }
 
@@ -103,12 +108,6 @@ import java.util.ArrayList;
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_talleres, container, false);
 
-        Toolbar toolbar = null;
-        toolbar = (Toolbar) v.findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_black_24dp);
-        //setSupportActionBar(toolbar);
-        //getSupportActionBar().setTitle("");
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         txtNombre=(TextView) v.findViewById(R.id.txtNombreTaller);
@@ -129,6 +128,7 @@ import java.util.ArrayList;
         txtTelefono.setText(telTaller);
         txtDireccion.setText(dirTaller);
         txtEvaluacion.setText(evaTaller);
+
 
         //PASSAR IMAGENSSSSSSSSSS SOCORRO
         Picasso.get().load(imgLogo).into(img1logo);
@@ -154,12 +154,13 @@ import java.util.ArrayList;
     }
 
     private void abrir_comentarios() {
-        ComentariosFragment fr=new ComentariosFragment();
-        //fr.setArguments(bn);
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.drawer_layout,fr)
-                .addToBackStack(null)
-                .commit();
+
+        ComentariosFragment frag = new ComentariosFragment();
+        Bundle b = new Bundle();
+        b.putString("keyTaller", key);
+        frag.setArguments(b);
+        getFragmentManager().beginTransaction().replace(R.id.drawer_layout, frag).addToBackStack(null).commit();
+
     }
 
 

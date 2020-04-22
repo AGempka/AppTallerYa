@@ -143,6 +143,7 @@ mAuth.signInWithEmailAndPassword(correo_cliente, password_cliente).addOnComplete
 
     }
 
+
     public void guardarEstadoButton(){
         SharedPreferences mypreferences = getActivity().getSharedPreferences (STRING_PREFERENCES,Context.MODE_PRIVATE);
         mypreferences.edit().putBoolean(PREFERENCE_ESTADO_BUTTON_SESION,btnNoCerrar.isChecked()).apply();

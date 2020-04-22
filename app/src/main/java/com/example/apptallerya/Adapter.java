@@ -52,10 +52,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TallerViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final TallerViewHolder holder, int position) {
 
+
         holder.txtNombreTaller.setText(taller.get(position).getNombre_taller());
         holder.txtDireccionTaller.setText(taller.get(position).getDireccion_taller());
         holder.textViewRating.setText(String.valueOf(taller.get(position).getEvaluacion_taller()));
         Picasso.get().load(taller.get(position).getImg_logo()).into(holder.img_logo);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

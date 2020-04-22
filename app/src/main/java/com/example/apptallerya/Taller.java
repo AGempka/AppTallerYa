@@ -7,10 +7,19 @@ import android.util.Base64;
 import java.io.Serializable;
 
 public class Taller implements Serializable {
-    private String nombre_taller, direccion_taller, telefono_taller, correo_taller;
+    private String nombre_taller, direccion_taller, telefono_taller, correo_taller, key;
     private String img1_taller, img2_taller, img_logo, imagen_lista;
     private Long password_taller;
     private double evaluacion_taller;
+
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public String getCorreo_taller() {
         return correo_taller;
@@ -100,6 +109,7 @@ public class Taller implements Serializable {
     @Override
     public String toString() {
         return "Taller{" +
+                "key='" + key + '\''+
                 "nombre_taller='" + nombre_taller + '\'' +
                 ", direccion_taller='" + direccion_taller + '\'' +
                 ", telefono_taller='" + telefono_taller + '\'' +
@@ -108,11 +118,12 @@ public class Taller implements Serializable {
                 '}';
     }
 
-    public Taller(String nombre_taller, String direccion_taller, String img_logo, double evaluacion_taller) {
+    public Taller(String nombre_taller, String direccion_taller, String img_logo, double evaluacion_taller, String key) {
         this.nombre_taller = nombre_taller;
         this.direccion_taller = direccion_taller;
         this.img_logo=img_logo;
         this.evaluacion_taller = evaluacion_taller;
+        this.key=key;
     }
 
 

@@ -53,10 +53,12 @@ public class PerfilesTalleresFragment extends Fragment  implements Adapter.OnIte
     ArrayList<Taller> tallerList;
     RecyclerView recyclerView;
     ProgressDialog dialog;
-
+    ArrayList<String> list;
     Adapter adaptador;
     DatabaseReference reference;
 
+
+    Taller taller;
     public PerfilesTalleresFragment() {
     }
 
@@ -70,15 +72,21 @@ public class PerfilesTalleresFragment extends Fragment  implements Adapter.OnIte
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         tallerList = new ArrayList<Taller>();
+        list = new ArrayList<String>();
         reference = FirebaseDatabase.getInstance().getReference("Talleres");
-
+        taller = new Taller();
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    String key = dataSnapshot1.getKey();
+                    list.add(key);
                     Taller t = dataSnapshot1.getValue(Taller.class);
                     tallerList.add(t);
+
+
                 }
+
                 adaptador = new Adapter(getContext(), tallerList);
                 recyclerView.setAdapter(adaptador);
                 adaptador.setOnItemClickListener(PerfilesTalleresFragment.this);
@@ -131,8 +139,9 @@ public class PerfilesTalleresFragment extends Fragment  implements Adapter.OnIte
        Toast.makeText(getContext(), "Taller seleccionado " + position, Toast.LENGTH_SHORT).show();
 
         //ver que puedo llamar en vez de tallerlist para obtener la posición del roll
+         final String itemKey = list.get(position);
         Taller clickeditem = tallerList.get(position);
-        TalleresFragment f = TalleresFragment.newInstance(clickeditem.getNombre_taller(), clickeditem.getTelefono_taller(), clickeditem.getDireccion_taller(), clickeditem.getEvaluacion_taller(), clickeditem.getImg1_taller(), clickeditem.getImg2_taller(), clickeditem.getImg_logo());
+        TalleresFragment f = TalleresFragment.newInstance(clickeditem.getNombre_taller(), clickeditem.getTelefono_taller(), clickeditem.getDireccion_taller(), clickeditem.getEvaluacion_taller(), clickeditem.getImg1_taller(), clickeditem.getImg2_taller(), clickeditem.getImg_logo(), itemKey.toString());
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.drawer_layout, f).addToBackStack(null).commit();
 
