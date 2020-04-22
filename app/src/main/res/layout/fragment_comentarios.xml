@@ -1,93 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-
-    android:orientation="vertical">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:background="@color/black"
-        android:layout_height="wrap_content">
-
-        <include layout="@layout/toolbar_flightsearch" />
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
+    <!--VERIFICAR SI TOOLBAR ES EL RESPONSABLE POR LENTIZAR EL CARGAMIENTO-->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:id="@+id/appbar"
+        android:layout_height="wrap_content"
+        >
+        <include layout="@layout/toolbar_flightsearch">
 
-        <include layout="@layout/include_commentlayout"/>
+        </include>
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <View
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/appbar"
+        android:id="@+id/recyclerComentarios"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/linear"
+        android:layout_margin="5dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <View
             android:layout_width="match_parent"
             android:layout_height="4dp"
+            android:layout_above="@id/linear"
             android:layout_marginTop="7dp"
-            android:layout_above="@+id/addcomment"
             android:background="@drawable/bg_gradient_soft" />
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        android:id="@+id/linear"
+        android:layout_alignParentBottom="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@color/white"
-            android:id="@+id/addcomment"
-            android:layout_alignParentBottom="true">
+            android:layout_height="wrap_content"
+
+            android:weightSum="2"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1.8"
+                android:orientation="horizontal"
+                android:layout_marginStart="16dp">
 
-                android:weightSum="2"
-                android:gravity="center"
-                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/commentInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_weight="1.8"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="16dp">
+                    android:layout_marginRight="20dp"
+                    android:background="@color/white"
+                    android:hint="¡Queremos saber tu opinión!"
+                    android:inputType="textMultiLine"
+                    android:padding="10dp"
+                    android:textColor="@color/textcolor"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textSize="14sp"
 
-
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="8.7dp"
-                        android:background="#00000000"
-                        android:hint="Comment..."
-                        android:lineSpacingExtra="2sp"
-                        android:textColor="#3d3f3e"
-                        android:textSize="12.7sp"
-                        android:textStyle="normal" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:tint="@color/gray"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginLeft="18dp"
-                    app:srcCompat="@drawable/ic_send_black_24dp" />
-
+                    android:gravity="center_vertical" />
             </LinearLayout>
 
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/btnComentar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/commentInput"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@color/white"
+            android:padding="15dp"
+            android:tint="@color/colorPrimaryDark"
+            app:srcCompat="@drawable/ic_send_black_24dp" />
 
 
+
+
+    </LinearLayout>
+    </LinearLayout>
     </RelativeLayout>
 
 
 
 
 
-</LinearLayout>
+
 
 
 

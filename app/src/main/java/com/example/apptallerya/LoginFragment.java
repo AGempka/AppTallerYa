@@ -132,4 +132,19 @@ mAuth.signInWithEmailAndPassword(correo_cliente, password_cliente).addOnComplete
 
     }
 
+//MANTENER SESIÓN GUAU
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //SÍ YA AUTENTICASTE O NO
+        if(mAuth.getCurrentUser()!=null){
+            startActivity(new Intent(getContext(), Main2Activity.class));
+            //getfinish
+
+             getActivity().getFragmentManager().popBackStack();
+        }
+    }
+
 }

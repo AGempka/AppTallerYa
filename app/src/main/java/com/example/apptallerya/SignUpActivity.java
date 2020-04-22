@@ -158,16 +158,6 @@ public class SignUpActivity extends Fragment {
     }
 
     //PARA MANTENER SESIÓN
-    @Override
-    public void onStart() {
-        super.onStart();
-        //SÍ YA AUTENTICASTE O NO
-        if(mAuth.getCurrentUser()!=null){
-            startActivity(new Intent(getContext(), Main2Activity.class));
-            //getfinish
-            getActivity().getFragmentManager().popBackStack();
-        }
-    }
 
 
 }
