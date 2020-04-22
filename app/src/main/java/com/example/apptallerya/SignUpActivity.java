@@ -12,21 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +39,7 @@ public class SignUpActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
 
-        View vista=inflater.inflate(R.layout.activity_sing_up,container,false);
+        View vista=inflater.inflate(R.layout.activity_sign_up,container,false);
         txtPassword=(EditText)vista.findViewById(R.id.txtPassword);
         txtCorreo=(EditText)vista.findViewById(R.id.txtCorreo);
         txtNombre=(EditText)vista.findViewById(R.id.txtNombre);
@@ -156,18 +147,5 @@ public class SignUpActivity extends Fragment {
     });
 
     }
-
-    //PARA MANTENER SESIÓN
-    @Override
-    public void onStart() {
-        super.onStart();
-        //SÍ YA AUTENTICASTE O NO
-        if(mAuth.getCurrentUser()!=null){
-            startActivity(new Intent(getContext(), Main2Activity.class));
-            //getfinish
-            getActivity().getFragmentManager().popBackStack();
-        }
-    }
-
 
 }

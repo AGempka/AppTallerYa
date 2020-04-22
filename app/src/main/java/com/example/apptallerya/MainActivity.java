@@ -2,6 +2,7 @@ package com.example.apptallerya;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import static com.example.apptallerya.LoginFragment.PREFERENCE_ESTADO_BUTTON_SESION;
+import static com.example.apptallerya.LoginFragment.STRING_PREFERENCES;
 
 public class MainActivity extends AppCompatActivity {
     Button ir_login;
@@ -18,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (sesion()== false){
+        if (obtenerEstadoButton()== true){
             Toast.makeText(getApplicationContext(),
                     "Seba es un crack", Toast.LENGTH_SHORT).show();
             Intent intencion = new Intent(MainActivity.this, Main2Activity.class);
@@ -36,10 +38,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private boolean sesion() {
-        SharedPreferences myPreferences = getSharedPreferences("PREFERENCE_ESTADO_BUTTON_SESION",MODE_PRIVATE);
-        return myPreferences.getBoolean(PREFERENCE_ESTADO_BUTTON_SESION,false);
-
+    public boolean obtenerEstadoButton(){
+        SharedPreferences mypreferences = getSharedPreferences (STRING_PREFERENCES, Context.MODE_PRIVATE);
+        return mypreferences.getBoolean(PREFERENCE_ESTADO_BUTTON_SESION,false);
     }
 
 

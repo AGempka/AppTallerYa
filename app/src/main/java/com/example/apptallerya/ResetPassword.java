@@ -61,6 +61,12 @@ public class ResetPassword extends Fragment {
             mDialog.setCanceledOnTouchOutside(false);
             mDialog.show();
             resetPassword();
+            LoginFragment fr=new LoginFragment();
+            //fr.setArguments(bn);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.escenario,fr)
+                    .addToBackStack(null)
+                    .commit();
         }else {
             Toast.makeText(getContext(), "Debe ingresar el correo", Toast.LENGTH_SHORT).show();
         }

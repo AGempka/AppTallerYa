@@ -7,6 +7,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.content.ContentQueryMap;
 import android.content.Intent;
@@ -25,12 +29,17 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     private DrawerLayout drawer;
     Adapter adapter;
     FirebaseAuth mAuth;
-
+    private AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().replace(R.id.drawer_layout, new PerfilesTalleresFragment()).commit();
+
+          mAuth=FirebaseAuth.getInstance();
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -38,12 +47,10 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.drawer_layout, new PerfilesTalleresFragment()).commit();
-
-          mAuth=FirebaseAuth.getInstance();
-
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_talleres, R.id.nav_agenda, R.id.nav_promo,R.id.nav_perfil,R.id.nav_nosotros)
+                .setDrawerLayout(drawer)
+                .build();
 
     }
 
@@ -89,6 +96,12 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     public void onFragmentInteraction(Uri uri) {
 
     }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.drawer_menu, menu);
+        return true;
+    }
+
 
 
 

@@ -36,11 +36,13 @@ public class LoginFragment extends Fragment  {
     //JsonRequest jrq;
     EditText txtCorreo, txtPassword;
     Button btnSesion, btnCrear, btnRecuperarContraseña;
+    RadioButton btnNoCerrar;
     String correo_cliente, password_cliente;
     FirebaseAuth mAuth;
 
     public static final String STRING_PREFERENCES = "com.example.apptallerya";
     public static final String PREFERENCE_ESTADO_BUTTON_SESION = "estado.button.noCerrar";
+    private boolean isActivatedRadioButton;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,18 +52,46 @@ public class LoginFragment extends Fragment  {
         txtCorreo = (EditText) vista.findViewById(R.id.txtCorreo);
         txtPassword = (EditText) vista.findViewById(R.id.txtPassword);
         btnNoCerrar = (RadioButton) vista.findViewById(R.id.btnNoCerrar);
+        isActivatedRadioButton = btnNoCerrar.isChecked(); //desactivado
         btnSesion = (Button) vista.findViewById(R.id.btnSesion);
         btnCrear = (Button) vista.findViewById(R.id.btnCrear);
         btnRecuperarContraseña=(Button)vista.findViewById(R.id.btnRecuperarContraseña);
        // rq = Volley.newRequestQueue(getContext());
         mAuth=FirebaseAuth.getInstance();
+
+        btnCrear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registrar_usuario();
+            }
+        });
+
+        btnRecuperarContraseña.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recuperar_contraseña();
+            }
+        });
+
+        btnNoCerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isActivatedRadioButton){
+                    btnNoCerrar.setChecked(false);
+                }
+                isActivatedRadioButton = btnNoCerrar.isChecked();
+            }
+        });
+
         btnSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 correo_cliente=txtCorreo.getText().toString();
                 password_cliente=txtPassword.getText().toString();
                 if (!correo_cliente.isEmpty() && !correo_cliente.isEmpty()) {
+                    guardarEstadoButton();
                     iniciar_sesion();
+
                 }else{
                     Toast.makeText(getContext(), "Debe completar los campos", Toast.LENGTH_SHORT).show();
                 }
@@ -70,32 +100,8 @@ public class LoginFragment extends Fragment  {
 
             }
         });
-
-
-        btnCrear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                guardarEstadoButton();
-                //registrar_usuario();
-            }
-        });
         return vista;
     }
-
-        btnRecuperarContraseña.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                recuperar_contraseña();
-
-
-
-
-            }
-        });
-
-        return vista;
-    }
-
     private void recuperar_contraseña() {
         ResetPassword fr=new ResetPassword();
         //fr.setArguments(fr);
@@ -110,17 +116,13 @@ public class LoginFragment extends Fragment  {
 
     void iniciar_sesion() {
 
-       // String url = "https://tallerya.000webhostapp.com//sesion.php?correo_cliente=" + txtCorreo.getText().toString() +
-       //         "&password_cliente=" + txtPassword.getText().toString();
-        //jrq = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-      //  rq.add(jrq);
-
 mAuth.signInWithEmailAndPassword(correo_cliente, password_cliente).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
     @Override
     public void onComplete(@NonNull Task<AuthResult> task) {
         if (task.isSuccessful()){
             startActivity(new Intent(getContext(), Main2Activity.class));
-           // finish();
+            getActivity().onBackPressed(); //para remover activy de login al presionar atras
+
         }else{
             Toast.makeText(getContext(), "No se pudo iniciar sesión. Compruebe los datos.", Toast.LENGTH_SHORT).show();
 
@@ -136,8 +138,16 @@ mAuth.signInWithEmailAndPassword(correo_cliente, password_cliente).addOnComplete
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.escenario,fr)
                 .addToBackStack(null)
+                .remove(fr)
                 .commit();
 
     }
+
+    public void guardarEstadoButton(){
+        SharedPreferences mypreferences = getActivity().getSharedPreferences (STRING_PREFERENCES,Context.MODE_PRIVATE);
+        mypreferences.edit().putBoolean(PREFERENCE_ESTADO_BUTTON_SESION,btnNoCerrar.isChecked()).apply();
+
+    }
+
 
 }
