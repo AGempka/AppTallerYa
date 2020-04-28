@@ -1,108 +1,92 @@
 package com.example.apptallerya;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.content.ContentQueryMap;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PerfilesTalleresFragment.OnFragmentInteractionListener {
-    private DrawerLayout drawer;
-    Adapter adapter;
-    FirebaseAuth mAuth;
-    private AppBarConfiguration mAppBarConfiguration;
 
-    @Override
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
+    Toolbar toolbar;
+    NavigationView navigationView;
+    FirebaseAuth mAuth;
+
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.drawer_layout, new PerfilesTalleresFragment()).commit();
-
-          mAuth=FirebaseAuth.getInstance();
-
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
+        drawerLayout = findViewById(R.id.drawer);
+        navigationView = findViewById(R.id.nav_view);
 
-        drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+        actionBarDrawerToggle.syncState();
+
+        // Carga de Fragment de talleres
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.container_main, new PerfilesTalleresFragment()).commit();
+
+        // Establecimiento de evento onclick de menu
         navigationView.setNavigationItemSelectedListener(this);
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_talleres, R.id.nav_agenda, R.id.nav_promo,R.id.nav_perfil,R.id.nav_nosotros)
-                .setDrawerLayout(drawer)
-                .build();
+
+        mAuth = FirebaseAuth.getInstance();
 
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_talleres:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new PerfilesTalleresFragment()).commit();
-                break;
-            // case R.id.nav_agenda:
-            //   getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-            //         new MessageFragment()).commit();
-            //break;
-            //case R.id.nav_promo:
-            //  getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-            //        new MessageFragment()).commit();
-            //break;
-            case R.id.nav_perfil:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new SignUpActivity()).commit();
-                break;
-            //case R.id.nav_nosotros:
-            // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-            //       new MessageFragment()).commit();
-            //break;
-            case R.id.nav_sesion:
-               cerrar_sesion();
-                break;
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        drawerLayout.closeDrawer(GravityCompat.START);
+        if (menuItem.getItemId() == R.id.nav_talleres) {
+            fragmentManager = getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container_main, new PerfilesTalleresFragment()).commit();
         }
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+            if (menuItem.getItemId() == R.id.nav_agenda) {
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_main, new SignUpActivity()).commit();
+            }
+            if (menuItem.getItemId() == R.id.nav_promo) {
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_main, new  SignUpActivity()).commit();
+            }
+            if (menuItem.getItemId() == R.id.nav_perfil) {
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_main, new SignUpActivity()).commit();
+            }
+            if (menuItem.getItemId() == R.id.nav_nosotros) {
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_main, new SignUpActivity()).commit();
+            }
+        return false;
     }
-
-    //CERRANDO SESIÓN
-    private void cerrar_sesion() {
-    mAuth.signOut();
-    startActivity(new Intent(Main2Activity.this, SesionActivity.class));
-    finish();
+    public interface OnFragmentInteractionListener {
+        void onFragmentInteraction(Uri uri);
     }
-
-    @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.drawer_menu, menu);
-        return true;
-    }
-
-
-
-
 }

@@ -83,6 +83,13 @@ public class LoginFragment extends Fragment  {
             }
         });
 
+        btnCrear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registrar_usuario();
+            }
+        });
+
         btnSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,12 +102,12 @@ public class LoginFragment extends Fragment  {
                 }else{
                     Toast.makeText(getContext(), "Debe completar los campos", Toast.LENGTH_SHORT).show();
                 }
-
-
-
             }
+
         });
         return vista;
+
+
     }
     private void recuperar_contraseña() {
         ResetPassword fr=new ResetPassword();
@@ -138,7 +145,6 @@ mAuth.signInWithEmailAndPassword(correo_cliente, password_cliente).addOnComplete
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.escenario,fr)
                 .addToBackStack(null)
-                .remove(fr)
                 .commit();
 
     }

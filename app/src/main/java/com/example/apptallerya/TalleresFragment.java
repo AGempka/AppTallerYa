@@ -159,7 +159,7 @@ import java.util.ArrayList;
         Bundle b = new Bundle();
         b.putString("keyTaller", key);
         frag.setArguments(b);
-        getFragmentManager().beginTransaction().replace(R.id.drawer_layout, frag).addToBackStack(null).commit();
+        getFragmentManager().beginTransaction().replace(R.id.drawer, frag).addToBackStack(null).commit();
 
     }
 

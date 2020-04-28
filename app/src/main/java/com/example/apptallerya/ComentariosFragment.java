@@ -59,8 +59,6 @@ public class ComentariosFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View vista = inflater.inflate(R.layout.fragment_comentarios, container, false);
-
-
         recyclerComentarios = (RecyclerView) vista.findViewById(R.id.recyclerComentarios);
         recyclerComentarios.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());

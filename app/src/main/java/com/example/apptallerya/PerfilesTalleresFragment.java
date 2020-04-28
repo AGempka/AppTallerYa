@@ -143,7 +143,7 @@ public class PerfilesTalleresFragment extends Fragment  implements Adapter.OnIte
         Taller clickeditem = tallerList.get(position);
         TalleresFragment f = TalleresFragment.newInstance(clickeditem.getNombre_taller(), clickeditem.getTelefono_taller(), clickeditem.getDireccion_taller(), clickeditem.getEvaluacion_taller(), clickeditem.getImg1_taller(), clickeditem.getImg2_taller(), clickeditem.getImg_logo(), itemKey.toString());
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.drawer_layout, f).addToBackStack(null).commit();
+        fragmentManager.beginTransaction().replace(R.id.drawer, f).addToBackStack(null).commit();
 
     }
 

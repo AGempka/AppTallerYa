@@ -18,5 +18,7 @@
         <string name="photos">Photos</string>
         <string name="stats">Stats</string>
         <string name="charts">Charts</string>
-    </resources>
+    <string name="open">open</string>
+    <string name="close">close</string>
+</resources>
 

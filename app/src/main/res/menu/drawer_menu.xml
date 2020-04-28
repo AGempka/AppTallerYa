@@ -1,38 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <group android:checkableBehavior="single">
+<item android:title="Principal">
+    <menu>
         <item
             android:id="@+id/nav_talleres"
             android:icon="@drawable/ic_talleres"
-            android:title="Talleres" />
+            android:title="Talleres" >
+            </item>
         <item
             android:id="@+id/nav_agenda"
             android:icon="@drawable/ic_agenda"
-            android:title="Agendamiento" />
+            android:title="Agendamiento" >
+        </item>
         <item
             android:id="@+id/nav_promo"
             android:icon="@drawable/ic_promo"
-            android:title="Promociones" />
-    </group>
-
-    <group android:checkableBehavior="single">
-    <item android:title="Usuario">
+            android:title="Promociones">
+        </item>
         <item
-            android:id="@+id/nav_perfil"
-            android:icon="@drawable/ic_perfil"
-            android:title="Perfil" />
-        <item
-            android:id="@+id/nav_nosotros"
-            android:icon="@drawable/ic_nosotros"
-            android:title="Quienes somos" />
+        android:id="@+id/nav_perfil"
+        android:icon="@drawable/ic_perfil"
+        android:title="Perfil">
+        </item>
 
-        <item
-            android:id="@+id/nav_sesion"
-            android:title="CERRAR SESIÓN" />
-
+        </menu>
+</item>
+    <item android:title="Secundario">
+        <menu>
+            <item
+                android:id="@+id/nav_nosotros"
+                android:icon="@drawable/ic_nosotros"
+                android:title="Quienes somos">
+            </item>
+            <item
+                android:id="@+id/nav_sesion"
+                android:icon="@drawable/ic_remove_circle_black_24dp"
+                android:title="CERRAR SESIÓN">
+            </item>
+        </menu>
     </item>
-    </group>
 
 
 </menu>

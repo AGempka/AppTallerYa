@@ -17,7 +17,7 @@
         >
 
 
-        <include layout="@layout/toolbar_flightsearch"></include>
+        <include layout="@layout/drawer_toolbar"></include>
 
 
     </com.google.android.material.appbar.AppBarLayout>

@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (obtenerEstadoButton()== true){
             Toast.makeText(getApplicationContext(),
-                    "Seba es un crack", Toast.LENGTH_SHORT).show();
+                    "Sesión iniciada automáticamente.", Toast.LENGTH_SHORT).show();
             Intent intencion = new Intent(MainActivity.this, Main2Activity.class);
             startActivity(intencion);
             finish();
