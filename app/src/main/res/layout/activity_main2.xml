@@ -8,18 +8,21 @@
     android:fitsSystemWindows="true"
     tools:context="com.example.apptallerya.Main2Activity"
     tools:openDrawer="start"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:background="@drawable/talleres">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/content_main">
+        </include>
+    </LinearLayout>
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/drawer_toolbar">
-    </include>
-
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/content_main"
-        >
     </include>
 
     <com.google.android.material.navigation.NavigationView
