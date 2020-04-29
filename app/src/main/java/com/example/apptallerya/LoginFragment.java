@@ -155,6 +155,10 @@ mAuth.signInWithEmailAndPassword(correo_cliente, password_cliente).addOnComplete
         mypreferences.edit().putBoolean(PREFERENCE_ESTADO_BUTTON_SESION,btnNoCerrar.isChecked()).apply();
 
     }
+    public static void cambiarEstadoButton(Context c, boolean b){
+        SharedPreferences mypreferences = c.getSharedPreferences(STRING_PREFERENCES, Context.MODE_PRIVATE);
+        mypreferences.edit().putBoolean(PREFERENCE_ESTADO_BUTTON_SESION,b).apply();
+    }
 
 
 }

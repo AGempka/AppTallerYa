@@ -35,6 +35,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="15dp"
             android:background="@drawable/input"
+            android:textColor="#fff"
             android:hint="Correo electrónico"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
@@ -51,6 +52,7 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/input"
             android:hint="Contraseña"
+            android:textColor="#fff"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -62,6 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="end"
+            android:textColorHint="#fff"
             android:hint="No cerrar sesión" />
         <Button
             android:id="@+id/btnRecuperarContraseña"

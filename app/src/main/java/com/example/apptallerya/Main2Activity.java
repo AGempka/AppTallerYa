@@ -9,6 +9,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -16,6 +18,9 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+
+import static com.example.apptallerya.LoginFragment.PREFERENCE_ESTADO_BUTTON_SESION;
+import static com.example.apptallerya.LoginFragment.STRING_PREFERENCES;
 
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PerfilesTalleresFragment.OnFragmentInteractionListener {
 
@@ -81,6 +86,11 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.container_main, new SignUpActivity()).commit();
             }
+        if (menuItem.getItemId() == R.id.nav_sesion) {
+            LoginFragment.cambiarEstadoButton(Main2Activity.this,false);
+            finish();
+        }
+
         return false;
     }
     public interface OnFragmentInteractionListener {
@@ -89,4 +99,5 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     public void onFragmentInteraction(Uri uri) {
 
     }
+
 }
