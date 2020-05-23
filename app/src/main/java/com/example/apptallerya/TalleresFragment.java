@@ -1,10 +1,14 @@
 package com.example.apptallerya;
 
+import android.content.res.ColorStateList;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -15,12 +19,21 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -30,7 +43,8 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  * Use the {@link TalleresFragment#newInstance} factory method to
  * create an instance of this fragment.
- */public class TalleresFragment extends Fragment {
+ */
+public class TalleresFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -53,18 +67,23 @@ import java.util.ArrayList;
     String nomTaller;
     String telTaller;
     String dirTaller;
-    String  evaTaller;
+    String evaTaller;
     String img1Taller;
     String img2Taller;
     String imgLogo;
     String key;
     Toolbar toolbar;
-
+    DatabaseReference UsersRef, TallerRef;
 
     ArrayList<Taller> list;
     AdapterListaImg adapter;
     RecyclerView recyclerView;
-   LinearLayout btnComentar;
+    LinearLayout btnComentar;
+    RatingBar mrating;
+    /// rating
+    LinearLayout rateNowLayout;
+    String getCurrentUserID;
+    private FirebaseAuth mAuth;
 
     public TalleresFragment() {
         // Required empty public constructor
@@ -73,7 +92,7 @@ import java.util.ArrayList;
 
     // TODO: Rename and change types and number of parameters
     public static TalleresFragment newInstance(String nombre_taller, String telefono_taller, String direccion_taller,
-                                              Double evaluacion_taller, String img1_taller, String img2_taller, String img_logo, String key) {
+                                               Double evaluacion_taller, String img1_taller, String img2_taller, String img_logo, String key) {
         TalleresFragment fragment = new TalleresFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, nombre_taller);
@@ -94,12 +113,12 @@ import java.util.ArrayList;
         if (getArguments() != null) {
             nomTaller = getArguments().getString(ARG_PARAM1);
             telTaller = getArguments().getString(ARG_PARAM2);
-            dirTaller= getArguments().getString(ARG_PARAM3);
-            evaTaller=getArguments().getString(ARG_PARAM4);
-            img1Taller=getArguments().getString(ARG_PARAM5);
-            img2Taller=getArguments().getString(ARG_PARAM6);
-            imgLogo=getArguments().getString(ARG_PARAM7);
-            key=getArguments().getString(ARG_PARAM8);
+            dirTaller = getArguments().getString(ARG_PARAM3);
+            evaTaller = getArguments().getString(ARG_PARAM4);
+            img1Taller = getArguments().getString(ARG_PARAM5);
+            img2Taller = getArguments().getString(ARG_PARAM6);
+            imgLogo = getArguments().getString(ARG_PARAM7);
+            key = getArguments().getString(ARG_PARAM8);
         }
     }
 
@@ -107,16 +126,15 @@ import java.util.ArrayList;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_talleres, container, false);
-
-
-
-        txtNombre=(TextView) v.findViewById(R.id.txtNombreTaller);
-        txtTelefono=(TextView) v.findViewById(R.id.txtTelefonoTaller);
-        img1logo=(ImageView) v.findViewById(R.id.img1Logo);
-        txtDireccion=(TextView)v.findViewById(R.id.txtDireccionTaller);
-        txtEvaluacion=(TextView)v.findViewById(R.id.txtValoracion);
-        btnComentar=(LinearLayout)v.findViewById(R.id.btnComentarios);
-
+        mAuth = FirebaseAuth.getInstance();
+        mrating = (RatingBar) v.findViewById(R.id.ratingBar);
+        txtNombre = (TextView) v.findViewById(R.id.txtNombreTaller);
+        txtTelefono = (TextView) v.findViewById(R.id.txtTelefonoTaller);
+        img1logo = (ImageView) v.findViewById(R.id.img1Logo);
+        txtDireccion = (TextView) v.findViewById(R.id.txtDireccionTaller);
+        mrating = (RatingBar) v.findViewById(R.id.ratingBar);
+        btnComentar = (LinearLayout) v.findViewById(R.id.btnComentarios);
+        txtEvaluacion=(TextView) v.findViewById(R.id.txtValoracion);
         btnComentar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,34 +142,109 @@ import java.util.ArrayList;
             }
         });
 
+        getCurrentUserID = mAuth.getCurrentUser().getUid();
+        UsersRef = FirebaseDatabase.getInstance().getReference("Clientes").child(getCurrentUserID);
+        TallerRef = FirebaseDatabase.getInstance().getReference("Talleres").child(key);
+
         txtNombre.setText(nomTaller);
         txtTelefono.setText(telTaller);
         txtDireccion.setText(dirTaller);
         txtEvaluacion.setText(evaTaller);
 
-
         //PASSAR IMAGENSSSSSSSSSS SOCORRO
         Picasso.get().load(imgLogo).into(img1logo);
 
-
-        String[] imagen_lista ={img1Taller, img2Taller};
+        String[] imagen_lista = {img1Taller, img2Taller};
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerviewFotos);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL,false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         list = new ArrayList<>();
         adapter = new AdapterListaImg(this.getContext(), list);
-        for (int i= 0 ; i<imagen_lista.length ; i++) {
+        for (int i = 0; i < imagen_lista.length; i++) {
 
             Taller taller = new Taller(imagen_lista[i]);
             taller.setImagen_lista(imagen_lista[i]);
             list.add(taller);
 
         }
+
+        displayClientesRelatedObjects();
+
         recyclerView.setAdapter(adapter);
+        getUserInformation();
+        getTallerInformation();
         return v;
     }
+
+    private void getTallerInformation() {
+        TallerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()&&dataSnapshot.getChildrenCount()>0){
+
+                      int ratingSum=0;
+                      float ratingTotal=0;
+                      float ratingAvr=0;
+                        for(DataSnapshot ds: dataSnapshot.child("rating").getChildren()){
+                            ratingSum=ratingSum + Integer.valueOf(ds.getValue().toString());
+                            ratingTotal++;
+                }
+                    if(ratingTotal!=0){
+                        ratingAvr=ratingSum/ratingTotal;
+                        TallerRef.child("evaluacion_taller").setValue(ratingAvr);
+                    }
+                        }
+                    }
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void getUserInformation() {
+        UsersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for (DataSnapshot ds:dataSnapshot.getChildren()){
+                        if (ds.getKey().equals("rating")){
+
+                            mrating.setRating(Integer.valueOf(ds.child(key).getValue().toString()));
+
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void displayClientesRelatedObjects() {
+        mrating.setVisibility(View.VISIBLE);
+        mrating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                UsersRef.child("rating").child(key).setValue(rating);
+                DatabaseReference mTallerRatingDb = FirebaseDatabase.getInstance().getReference().child("Talleres").child(key).child("rating");
+                mTallerRatingDb.child(getCurrentUserID).setValue(rating);
+
+            }
+        });
+
+    }
+
 
     private void abrir_comentarios() {
 
@@ -162,7 +255,6 @@ import java.util.ArrayList;
         getFragmentManager().beginTransaction().replace(R.id.drawer, frag).addToBackStack(null).commit();
 
     }
-
 
 
 }
