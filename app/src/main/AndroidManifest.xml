@@ -47,6 +47,8 @@
                     tools:ignore="AppLinkUrlError" />
             </intent-filter>
         </activity>
+        <activity android:name=".AgendementoServicoActivity"></activity>
+        <activity android:name=".HorariosActivity" />
         <activity android:name=".MainActivity">
         </activity>
     </application>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    android:layout_gravity="center"
+    android:gravity="center"
+    tools:context=".AgendementoServicoActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre* "
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/AgendamentoServico_Nome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textSize="20sp" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:text="Contacto* "
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/textView_AgendamentoServico_Numero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <CheckBox
+                android:id="@+id/checkbox_AgendamentoServico_WhatsApp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorAccent"
+                android:text="WhatsApp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Correo* "
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/AgendamentoServico_Correo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Detalles del vehículo"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editText_detallesdelvehiculo"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Servicio*"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <CheckBox
+                android:id="@+id/checkbox_AgendamentoChaperia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:buttonTint="@color/colorAccent"
+                android:shadowColor="@color/colorPrimary"
+                android:text="Chapería y Pintura"
+                android:textSize="20sp" />
+
+
+            <CheckBox
+            android:id="@+id/checkbox_AgendamentoLimpieza"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:buttonTint="@color/colorAccent"
+            android:shadowColor="@color/colorPrimary"
+
+            android:text="Limpieza"
+            android:textSize="20sp" />
+
+
+            <CheckBox
+                android:id="@+id/checkbox_AgendamentoMecanica"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:buttonTint="@color/colorAccent"
+                android:shadowColor="@color/colorPrimary"
+                android:text="Mecánica Rápida"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/checkbox_AgendamentoInyeccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:buttonTint="@color/colorAccent"
+                android:shadowColor="@color/colorPrimary"
+                android:text="Inyección Electrónica y Mecánica"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/checkbox_AgendamentoElectricidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:buttonTint="@color/colorAccent"
+                android:shadowColor="@color/colorPrimary"
+                android:text="Electricidad del motor"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/checkbox_AgendamentoLubricacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:buttonTint="@color/colorAccent"
+                android:shadowColor="@color/colorPrimary"
+                android:text="Lubricación"
+                android:textSize="20sp" />
+
+
+
+            <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_AgendamentoServico_Agendar"
+        android:layout_width="145dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:background="@color/colorPrimary"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
+        android:foreground="?attr/selectableItemBackground">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Agendar"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

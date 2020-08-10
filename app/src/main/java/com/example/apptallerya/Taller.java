@@ -7,11 +7,27 @@ import android.util.Base64;
 import java.io.Serializable;
 
 public class Taller implements Serializable {
-    private String nombre_taller, direccion_taller, telefono_taller, correo_taller, key;
+    private String nombre_taller, direccion_taller, telefono_taller, correo_taller, key, latitud, longitud;
     private String img1_taller, img2_taller, img_logo, imagen_lista;
     private Long password_taller;
     private double evaluacion_taller;
 
+
+    public String getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(String latitud) {
+        this.latitud = latitud;
+    }
+
+    public String getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
+    }
 
     public String getKey() {
         return key;
@@ -109,21 +125,25 @@ public class Taller implements Serializable {
     @Override
     public String toString() {
         return "Taller{" +
-                "key='" + key + '\''+
                 "nombre_taller='" + nombre_taller + '\'' +
                 ", direccion_taller='" + direccion_taller + '\'' +
                 ", telefono_taller='" + telefono_taller + '\'' +
+                ", key='" + key + '\'' +
+                ", latitud='" + latitud + '\'' +
+                ", longitud='" + longitud + '\'' +
                 ", img_logo='" + img_logo + '\'' +
                 ", evaluacion_taller=" + evaluacion_taller +
                 '}';
     }
 
-    public Taller(String nombre_taller, String direccion_taller, String img_logo, double evaluacion_taller, String key) {
+    public Taller(String nombre_taller, String direccion_taller, String img_logo, double evaluacion_taller, String key, String  latitud, String longitud) {
         this.nombre_taller = nombre_taller;
         this.direccion_taller = direccion_taller;
         this.img_logo=img_logo;
         this.evaluacion_taller = evaluacion_taller;
         this.key=key;
+        this.latitud=latitud;
+        this.longitud=longitud;
     }
 
 

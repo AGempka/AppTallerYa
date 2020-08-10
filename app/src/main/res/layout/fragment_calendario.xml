@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".FragmentCalendario">
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:gravity="center"
+            android:text="Agende tu horario"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            app:cardCornerRadius="1dp"
+            app:cardElevation="2dp"
+
+            app:cardUseCompatPadding="true"
+            android:foreground="?attr/selectableItemBackground">
+
+
+            <CalendarView
+                android:id="@+id/calendarView_Calendario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/colorCalendario"
+                android:dateTextAppearance="@style/CalendarioTexto"
+                android:showWeekNumber="true"
+                android:theme="@style/AppTheme.PopupOverlay">
+
+
+            </CalendarView>
+
+
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="Obs: Haga clic en la fecha y realice su agendamiento."
+            android:textSize="20sp"
+            android:textStyle="italic" />
+
+
+    </LinearLayout>
+
+
+    </ScrollView>
+
+</FrameLayout>

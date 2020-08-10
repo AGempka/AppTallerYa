@@ -141,7 +141,7 @@ public class PerfilesTalleresFragment extends Fragment  implements Adapter.OnIte
         //ver que puedo llamar en vez de tallerlist para obtener la posición del roll
          final String itemKey = list.get(position);
         Taller clickeditem = tallerList.get(position);
-        TalleresFragment f = TalleresFragment.newInstance(clickeditem.getNombre_taller(), clickeditem.getTelefono_taller(), clickeditem.getDireccion_taller(), clickeditem.getEvaluacion_taller(), clickeditem.getImg1_taller(), clickeditem.getImg2_taller(), clickeditem.getImg_logo(), itemKey.toString());
+        TalleresFragment f = TalleresFragment.newInstance(clickeditem.getNombre_taller(), clickeditem.getTelefono_taller(), clickeditem.getDireccion_taller(), clickeditem.getEvaluacion_taller(), clickeditem.getImg1_taller(), clickeditem.getImg2_taller(), clickeditem.getImg_logo(), itemKey.toString(), clickeditem.getLatitud(), clickeditem.getLongitud());
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.container_main, f).addToBackStack(null).commit();
 

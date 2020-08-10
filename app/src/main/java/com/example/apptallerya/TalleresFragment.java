@@ -1,5 +1,6 @@
 package com.example.apptallerya;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -24,10 +25,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.apptallerya.util.Util;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -55,6 +58,8 @@ public class TalleresFragment extends Fragment {
     private static final String ARG_PARAM6 = "param6";
     private static final String ARG_PARAM7 = "param7";
     private static final String ARG_PARAM8 = "param8";
+    private static final String ARG_PARAM9 = "param9";
+    private static final String ARG_PARAM10 = "param10";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -64,6 +69,8 @@ public class TalleresFragment extends Fragment {
     TextView txtEvaluacion;
     ImageView img1logo;
     ImageView img2;
+    LinearLayout btnagendamientos;
+    LinearLayout btnmapa;
     String nomTaller;
     String telTaller;
     String dirTaller;
@@ -72,6 +79,8 @@ public class TalleresFragment extends Fragment {
     String img2Taller;
     String imgLogo;
     String key;
+    private String latitudTaller;
+    private String longitudTaller;
     Toolbar toolbar;
     DatabaseReference UsersRef, TallerRef;
 
@@ -92,7 +101,7 @@ public class TalleresFragment extends Fragment {
 
     // TODO: Rename and change types and number of parameters
     public static TalleresFragment newInstance(String nombre_taller, String telefono_taller, String direccion_taller,
-                                               Double evaluacion_taller, String img1_taller, String img2_taller, String img_logo, String key) {
+                                               Double evaluacion_taller, String img1_taller, String img2_taller, String img_logo, String key, String latitud, String longitud) {
         TalleresFragment fragment = new TalleresFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, nombre_taller);
@@ -103,6 +112,8 @@ public class TalleresFragment extends Fragment {
         args.putString(ARG_PARAM6, img2_taller);
         args.putString(ARG_PARAM7, img_logo);
         args.putString(ARG_PARAM8, key);
+        args.putString(ARG_PARAM9, latitud);
+        args.putString(ARG_PARAM10, longitud);
         fragment.setArguments(args);
         return fragment;
     }
@@ -119,6 +130,8 @@ public class TalleresFragment extends Fragment {
             img2Taller = getArguments().getString(ARG_PARAM6);
             imgLogo = getArguments().getString(ARG_PARAM7);
             key = getArguments().getString(ARG_PARAM8);
+            latitudTaller=getArguments().getString(ARG_PARAM9);
+            longitudTaller=getArguments().getString(ARG_PARAM10);
         }
     }
 
@@ -135,6 +148,30 @@ public class TalleresFragment extends Fragment {
         mrating = (RatingBar) v.findViewById(R.id.ratingBar);
         btnComentar = (LinearLayout) v.findViewById(R.id.btnComentarios);
         txtEvaluacion=(TextView) v.findViewById(R.id.txtValoracion);
+        btnmapa= (LinearLayout)v.findViewById(R.id.btnmapa);
+        btnmapa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            clickenmapa();
+            }
+        });
+
+        btnagendamientos= (LinearLayout)v.findViewById(R.id.btnagendamientos);
+        btnagendamientos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentCalendario frag = new FragmentCalendario();
+                Bundle b = new Bundle();
+                b.putString("keyTaller", key);
+                frag.setArguments(b);
+                getFragmentManager().beginTransaction().replace(R.id.drawer, frag).addToBackStack(null).commit();
+
+
+            }
+        });
+
+
         btnComentar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,6 +187,7 @@ public class TalleresFragment extends Fragment {
         txtTelefono.setText(telTaller);
         txtDireccion.setText(dirTaller);
         txtEvaluacion.setText(evaTaller);
+
 
         //PASSAR IMAGENSSSSSSSSSS SOCORRO
         Picasso.get().load(imgLogo).into(img1logo);
@@ -176,6 +214,43 @@ public class TalleresFragment extends Fragment {
         getUserInformation();
         getTallerInformation();
         return v;
+    }
+
+    private void clickenmapa() {
+
+
+            if(!latitudTaller.isEmpty() && !longitudTaller.isEmpty()){
+
+
+                if (Util.statusInternet_MoWi(getContext())){
+
+                    abrirLocalizacionTaller();
+
+                }else{
+
+                    Toast.makeText(getContext(),"Error de Conexión con Internet.",Toast.LENGTH_LONG).show();
+
+                }
+
+
+            }else{
+
+                Toast.makeText(getContext(),"Localización de taller indisponible",Toast.LENGTH_LONG).show();
+
+
+            }
+
+
+        }
+
+    private void abrirLocalizacionTaller() {
+        String url = "https://www.google.com/maps/search/?api=1&query="+latitudTaller+longitudTaller;
+
+        Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(url));
+
+        startActivity(intent);
+
+
     }
 
     private void getTallerInformation() {
