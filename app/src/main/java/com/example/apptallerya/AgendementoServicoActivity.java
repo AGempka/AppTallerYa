@@ -62,20 +62,22 @@ public class AgendementoServicoActivity extends AppCompatActivity implements Vie
     private DatabaseReference UsersRef;
 
 
-    private GoogleApiClient googleApiClient_Numero;
-
 
     private ArrayList<String> data = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agendemento_servico);
 
-
-
         data = getIntent().getStringArrayListExtra("data");
+      String  key = getIntent().getStringExtra("keyTaller");
 
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        String uid = user.getUid();
 
         editText_Nome = (TextView)findViewById(R.id.AgendamentoServico_Nome);
         textView_NumeroContato = (TextView)findViewById(R.id.textView_AgendamentoServico_Numero);
@@ -90,33 +92,16 @@ public class AgendementoServicoActivity extends AppCompatActivity implements Vie
         cardView_Agendar = (CardView)findViewById(R.id.cardView_AgendamentoServico_Agendar);
         detallesdelvehiculo = (EditText)findViewById(R.id.editText_detallesdelvehiculo);
 
-
         cardView_Agendar.setOnClickListener(this);
 
-        String key = getIntent().getStringExtra("KeyTaller");
 
-        googleApiClient_Numero = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .enableAutoManage(this,this)
-                    .addApi(Auth.CREDENTIALS_API)
-                    .build();
-
-
-        rellenartextviews();
-    }
-
-    private void rellenartextviews() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
-        String uid = user.getUid();
-
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("Clientes").child(uid).addValueEventListener(new ValueEventListener() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Clientes");
+        ref.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String nombre_cliente = dataSnapshot.getValue(String.class);
-                String correo_cliente = dataSnapshot.getValue(String.class);
-                String telefono_cliente = dataSnapshot.getValue(String.class);
+                String nombre_cliente = dataSnapshot.child("nombre_cliente").getValue(String.class);
+                String correo_cliente = dataSnapshot.child("correo_cliente").getValue(String.class);
+                String telefono_cliente = dataSnapshot.child("telefono_cliente").getValue(String.class);
 
                 editText_Nome.setText(nombre_cliente);
                 textView_NumeroContato.setText(telefono_cliente);
@@ -349,9 +334,6 @@ public class AgendementoServicoActivity extends AppCompatActivity implements Vie
 
     private void agendarFirebase(String nombre_cliente,String telefono_cliente, String correo_cliente,  boolean whatsApp, boolean chaperiaypintura, boolean lubricacion, boolean limpieza, boolean mecanica, boolean electricidad, boolean inyeccion){
 
-
-
-
         Agendamiento agendamiento = new Agendamiento(nombre_cliente,telefono_cliente,correo_cliente, whatsApp, chaperiaypintura,lubricacion, limpieza, mecanica,electricidad, inyeccion);
 
         final DialogProgress dialogProgress = new DialogProgress();
@@ -359,11 +341,12 @@ public class AgendementoServicoActivity extends AppCompatActivity implements Vie
         dialogProgress.show(getSupportFragmentManager(),"dialog");
 
 
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
-        DatabaseReference reference = firebaseDatabase.getReference().child("BD").child("Calendario")
+        String  key = getIntent().getStringExtra("keyTaller");
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference reference = firebaseDatabase.getReference().child("Talleres").child(key).child("Calendario")
                 .child("HorariosAgendados").child(data.get(2)).child("Mes").child(data.get(1))
-                .child("dia").child(data.get(0));
+                .child("Dia").child(data.get(0));
 
 
         reference.child(data.get(3)).setValue(agendamiento).addOnCompleteListener(new OnCompleteListener<Void>() {

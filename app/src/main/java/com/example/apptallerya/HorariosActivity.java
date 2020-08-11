@@ -30,7 +30,6 @@ public class HorariosActivity extends AppCompatActivity implements AdapterListVi
 
     private List<String> horarios_Temp= new ArrayList<String>();
 
-    private String key = new String();
     private ArrayList<String> data = new ArrayList<String>();
 
 
@@ -56,7 +55,7 @@ public class HorariosActivity extends AppCompatActivity implements AdapterListVi
 
         database = FirebaseDatabase.getInstance();
         data = getIntent().getStringArrayListExtra("data");
-        key = getIntent().getStringExtra("keyTaller");
+       String key = getIntent().getStringExtra("keyTaller");
 
         configurarListView();
 
@@ -89,9 +88,7 @@ public class HorariosActivity extends AppCompatActivity implements AdapterListVi
 
 
     private void carregarHorarioFuncionamento(){
-
-
-
+        String key = getIntent().getStringExtra("keyTaller");
         DatabaseReference reference = database.getReference("Talleres").
                 child(key).child("Calendario").child("Horarios");
 
@@ -141,12 +138,10 @@ public class HorariosActivity extends AppCompatActivity implements AdapterListVi
     //ESSE METODO É CHAMADO SOMENTE DEPOIS QUE O METODO ACIMA FOR EXECUTADO
 
     private void buscarHorariosReservados(){
-
-
-
+        String key = getIntent().getStringExtra("keyTaller");
 
         referenceBuscarHorario = database.getReference("Talleres").
-                child(key).child("Calendario").child("HorariosAgendados").child(data.get(2)).child("Mes").child(data.get(1)).child("dia").child(data.get(0));
+                child(key).child("Calendario").child("HorariosAgendados").child(data.get(2)).child("Mes").child(data.get(1)).child("Dia").child(data.get(0));
 
 
 
@@ -274,12 +269,11 @@ public class HorariosActivity extends AppCompatActivity implements AdapterListVi
 
     private void consultarHorarioSelecionadoBanco(final String horario, final int posicao){
 
-
-
+        String key = getIntent().getStringExtra("keyTaller");
         DatabaseReference reference = database.getReference("Talleres").
                 child(key).child("Calendario").child("HorariosAgendados").
                 child(data.get(2)).child("Mes").
-                child(data.get(1)).child("dia").child(data.get(0)).child(horarios_Temp.get(posicao));
+                child(data.get(1)).child("Dia").child(data.get(0)).child(horarios_Temp.get(posicao));
 
 
 
@@ -309,8 +303,9 @@ public class HorariosActivity extends AppCompatActivity implements AdapterListVi
 
                     data.add(3,horario);
 
-
-                    intent.putExtra("data",data);
+                    intent.putExtra("data", data);
+                    String key = getIntent().getStringExtra("keyTaller");
+                    intent.putExtra("keyTaller", key);
 
                     startActivity(intent);
 

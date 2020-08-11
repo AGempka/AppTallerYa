@@ -205,7 +205,7 @@ public class FragmentCalendario extends Fragment implements CalendarView.OnDateC
 
 
 
-        Locale locale = new Locale("pt","BR");
+        Locale locale = new Locale("es","PY");
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy",locale);
 
