@@ -288,15 +288,15 @@ public class FragmentCalendario extends Fragment implements CalendarView.OnDateC
 
         int diaFinalCalendario = calendar.getActualMaximum(mes_Atual-1);
 
-        if (diaFinalCalendario == dia_Atual){
+    /*    if (diaFinalCalendario == dia_Atual){
 
             Toast.makeText(getContext(), "Agendamiento disponible del dia 1 en adelante",Toast.LENGTH_LONG).show();
 
             return false;
 
-        }
+        }*/
 
-       else if (data.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){
+       if (data.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){
 
 
             Toast.makeText(getContext(), "Infelizmente no trabajamos domingo.",Toast.LENGTH_LONG).show();
