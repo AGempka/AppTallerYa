@@ -358,7 +358,7 @@ public class AgendementoServicoActivity extends AppCompatActivity implements Vie
 
 
                     dialogProgress.dismiss();
-                    Toast.makeText(getBaseContext(),"Agendado con suceso.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(),"Solicitud de agendamiento enviada.",Toast.LENGTH_LONG).show();
                     finish();
 
                 }else{
